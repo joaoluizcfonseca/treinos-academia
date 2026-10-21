@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "Treinos até o verão",
+  "short_name": "Treinos",
+  "description": "Treino do dia, pesos, corrida e a retrospectiva do verão. Funciona sem internet.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e6f1f1",
+  "theme_color": "#e6f1f1",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
