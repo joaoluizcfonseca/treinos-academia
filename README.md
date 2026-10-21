@@ -2,8 +2,6 @@
   <img src="docs/banner.png" alt="Treinos até o verão: app pessoal de treino" width="100%">
 </p>
 
-<h1 align="center">Treinos até o verão</h1>
-
 <p align="center">
   App de treino de uso pessoal para acompanhar academia e corrida até o verão.<br>
   Um único arquivo HTML que se instala no celular e funciona sem internet.
