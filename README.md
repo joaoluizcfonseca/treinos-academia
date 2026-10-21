@@ -11,7 +11,7 @@
   <img alt="Projeto de uso pessoal" src="https://img.shields.io/badge/projeto-uso%20pessoal-0D3B4F?style=flat-square">
   <img alt="PWA que funciona offline" src="https://img.shields.io/badge/PWA-funciona%20offline-D97F00?style=flat-square">
   <img alt="HTML, CSS e JavaScript sem dependências" src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-sem%20depend%C3%AAncias-23949D?style=flat-square">
-  <img alt="94 testes com Playwright" src="https://img.shields.io/badge/testes-94%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
+  <img alt="95 testes com Playwright" src="https://img.shields.io/badge/testes-95%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
 </p>
 
 <p align="center">
@@ -120,7 +120,7 @@ No computador, basta abrir o `index.html` no navegador.
 
 ## Testes
 
-São 94 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
+São 95 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
 
 ```bash
 pip install -r requirements-dev.txt

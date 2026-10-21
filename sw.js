@@ -47,7 +47,9 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return; // fontes do Google e afins: o navegador resolve sozinho
   event.respondWith(
     caches.open(CACHE).then(async (cache) => {
-      const key = req.mode === "navigate" ? "./index.html" : req;
+      // abrir o app (a pasta ou o index.html) usa a cópia guardada do app; qualquer outro arquivo vem como é
+      const app = req.mode === "navigate" && /\/(index\.html)?$/.test(url.pathname);
+      const key = app ? "./index.html" : req;
       const saved = await cache.match(key, { ignoreSearch: true });
       const fresh = fetch(req)
         .then((res) => {
