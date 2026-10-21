@@ -11,7 +11,7 @@
   <img alt="Projeto de uso pessoal" src="https://img.shields.io/badge/projeto-uso%20pessoal-0D3B4F?style=flat-square">
   <img alt="PWA que funciona offline" src="https://img.shields.io/badge/PWA-funciona%20offline-D97F00?style=flat-square">
   <img alt="HTML, CSS e JavaScript sem dependências" src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-sem%20depend%C3%AAncias-23949D?style=flat-square">
-  <img alt="95 testes com Playwright" src="https://img.shields.io/badge/testes-95%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
+  <img alt="98 testes com Playwright" src="https://img.shields.io/badge/testes-98%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
 </p>
 
 <p align="center">
@@ -69,7 +69,7 @@ Quatro visuais, cada um com tema claro e escuro e a própria escala de cores por
 
 ### Sem internet
 
-Instalado na tela inicial, o app abre e salva sem conexão. Os dados ficam no aparelho, com exportação e importação de backup em **Progresso → Backup**.
+Instalado na tela inicial, o app abre e salva sem conexão. Os dados ficam no aparelho, com exportação e importação de backup em **Progresso → Backup**, e o app lembra de exportar um backup uma vez por semana.
 
 ## Como funciona
 
@@ -120,7 +120,7 @@ No computador, basta abrir o `index.html` no navegador.
 
 ## Testes
 
-São 95 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
+São 98 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
 
 ```bash
 pip install -r requirements-dev.txt
@@ -135,7 +135,7 @@ Eles cobrem:
 - **Retrospectivas:** verão inteiro simulado, prévia, retrospectiva de cada mês, navegação das histórias e o app depois do verão.
 - **Visuais:** os quatro, nos dois temas, em telas a partir de 320 px, com contraste legível sobre a cor do nível.
 - **Salvamento:** versões novas, conflitos, falhas de publicação e telas que não conseguem salvar, sem nunca travar os campos.
-- **Sem internet:** abrir e salvar com o servidor desligado, fontes incluídas e backup de ida e volta.
+- **Sem internet:** abrir e salvar com o servidor desligado, fontes incluídas, backup de ida e volta e o lembrete semanal de backup.
 
 ## Licença
 
@@ -143,4 +143,4 @@ Projeto pessoal, sem licença de uso: todos os direitos reservados. As fontes em
 
 ---
 
-<p align="center">Feito por <b>Knz</b> 🇧🇷</p>
+<p align="center">Feito por <b>João Candaten</b> 🇧🇷</p>

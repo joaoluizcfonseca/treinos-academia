@@ -4292,6 +4292,16 @@ button.pw-n {
 }
 
 /* ---------- Backup (app instalado: os dados ficam só no celular) ---------- */
+/* lembrete semanal no Hoje: o "Depois" fica como link, ao lado do botão */
+.wrem.bkrem .row {
+  align-items: center;
+}
+.wrem.bkrem .lnk {
+  background: none;
+  color: var(--soft);
+  padding: 8px 6px;
+  font-weight: 600;
+}
 .bk-b {
   display: flex;
   flex-wrap: wrap;
@@ -4948,7 +4958,7 @@ button.pw-n {
     else if (tab === "prog") html += progHTML(s);
     else html += quadroHTML(s);
     html += sheetHTML(); // a folha do dia abre do Calendário e do aviso de dia sem marcar
-    html += `<footer class="cred">Feito por Knz</footer>`;
+    html += `<footer class="cred">Feito por João Candaten</footer>`;
     html +=
       `<nav class="nav">` +
       [
@@ -5143,8 +5153,26 @@ button.pw-n {
       holiHTML() +
       weighRemHTML() +
       checkHTML(s) +
-      runHTML()
+      runHTML() +
+      bkRemHTML()
     );
+  }
+  // Uma vez por semana, se tem treino anotado e nenhum backup recente, lembra de exportar. "Depois" adia 7 dias.
+  function bkRemHTML() {
+    if (IN_CLAUDE || !Object.keys(state.logs).length) return "";
+    let at = "",
+      later = "";
+    try {
+      at = localStorage.getItem("treinos-backup-em") || "";
+      later = localStorage.getItem("treinos-backup-depois") || "";
+    } catch (e) {}
+    const days = /^\d{4}-\d{2}-\d{2}$/.test(at) ? Math.round((parse(todayKey) - parse(at)) / dayMs) : null;
+    if ((days !== null && days < 7) || (later && todayKey < later)) return "";
+    const msg =
+      days === null
+        ? "Teus treinos ficam só neste celular. Exporta um backup e guarda o arquivo, pra não perder nada."
+        : `Teu último backup foi há ${days} dias. Exporta um novo e guarda o arquivo, pra não perder nada.`;
+    return `<section class="wrem bkrem"><b>Backup</b><span>${msg}</span><div class="row"><button data-act="export">Exportar backup</button><button class="lnk" data-act="bk-later">Depois</button></div></section>`;
   }
 
   function nextWorkout() {
@@ -6295,6 +6323,7 @@ button.pw-n {
       try {
         localStorage.setItem("treinos-lvl", String(levelInfo(stats()).n));
         localStorage.setItem("treinos-secret", JSON.stringify(unlockedSecrets().map((x) => x.id)));
+        localStorage.setItem("treinos-backup-em", todayKey); // o arquivo importado já é um backup
         sessionStorage.setItem("treinos-import", String(Object.keys(state.logs).length));
       } catch (e) {}
       localWrite();
@@ -7372,7 +7401,7 @@ button.pw-n {
         .map(([v, l]) => `<div><dt>${l}</dt><dd>${v}</dd></div>`)
         .join(
           "",
-        )}</dl>${rows.length ? `<ul class="wp-l">${rows.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul>` : ""}<p class="wp-f">Feito por Knz</p></div>
+        )}</dl>${rows.length ? `<ul class="wp-l">${rows.map(([a, b]) => `<li><span>${a}</span><b>${b}</b></li>`).join("")}</ul>` : ""}<p class="wp-f">Feito por João Candaten</p></div>
       <p class="wr-tip">${tip}</p>${WR_BTNS}`;
   }
   function slideHTML(x) {
@@ -8674,6 +8703,13 @@ button.pw-n {
     }
     if (act === "export") {
       exportBackup();
+      return;
+    }
+    if (act === "bk-later") {
+      try {
+        localStorage.setItem("treinos-backup-depois", key(new Date(today.getTime() + 7 * dayMs)));
+      } catch (e) {}
+      render();
       return;
     }
     if (act === "theme") {
