@@ -11,7 +11,7 @@
   <img alt="Projeto de uso pessoal" src="https://img.shields.io/badge/projeto-uso%20pessoal-0D3B4F?style=flat-square">
   <img alt="PWA que funciona offline" src="https://img.shields.io/badge/PWA-funciona%20offline-D97F00?style=flat-square">
   <img alt="HTML, CSS e JavaScript sem dependências" src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-sem%20depend%C3%AAncias-23949D?style=flat-square">
-  <img alt="98 testes com Playwright" src="https://img.shields.io/badge/testes-98%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
+  <img alt="118 testes com Playwright" src="https://img.shields.io/badge/testes-118%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
 </p>
 
 <p align="center">
@@ -46,9 +46,12 @@
 ### Progresso
 
 - **Painel geral:** treinos, sequência, corrida, peso, força e nível, com gráficos semanais na mesma escala de tempo.
+- **Treinos por ano:** um quadradinho por dia, ano por ano, como o gráfico de contribuições do GitHub. Quanto mais forte a cor, mais peso levantado no dia; tocar ou arrastar o dedo mostra o treino de cada dia.
 - **Detalhes:** evolução das cargas, séries por músculo, corridas (distância, tempo e ritmo) e peso corporal com a meta de proteína.
 - **Calendário** até o verão, com feriados, para marcar ou corrigir qualquer dia.
 - **Nível e conquistas**, incluindo conquistas secretas.
+
+<p align="center"><img src="docs/treinos-por-ano.png" width="390" alt="Treinos por ano: a grade do ano com os dias de treino coloridos de setembro a dezembro"></p>
 
 ### Retrospectivas
 
@@ -120,7 +123,7 @@ No computador, basta abrir o `index.html` no navegador.
 
 ## Testes
 
-São 98 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
+São 118 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
 
 ```bash
 pip install -r requirements-dev.txt
@@ -132,6 +135,7 @@ Eles cobrem:
 
 - **Treino:** do começo ao fim, com pesos, pegadas, sugestão de carga, treinos esquecidos e desmarcar sem deixar dados para trás.
 - **Cálculos:** sequência, nível, séries por músculo, painel geral e evolução das cargas.
+- **Treinos por ano:** o tom de cada dia pelo peso levantado, toque, arrasto e setas, vários anos e a mesma conta da retrospectiva.
 - **Retrospectivas:** verão inteiro simulado, prévia, retrospectiva de cada mês, navegação das histórias e o app depois do verão.
 - **Visuais:** os quatro, nos dois temas, em telas a partir de 320 px, com contraste legível sobre a cor do nível.
 - **Salvamento:** versões novas, conflitos, falhas de publicação e telas que não conseguem salvar, sem nunca travar os campos.

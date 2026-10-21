@@ -1102,7 +1102,8 @@ button.pw-n {
   line-height: 1.3;
   color: var(--soft);
 }
-.dr {
+.dr,
+.yr-d {
   display: flex;
   flex-wrap: wrap;
   gap: 2px 8px;
@@ -1111,10 +1112,12 @@ button.pw-n {
   margin: 14px 0 4px;
   font-size: 14px;
 }
-.dr b {
+.dr b,
+.yr-d b {
   font-weight: 800;
 }
-.dr span {
+.dr span,
+.yr-d span {
   color: var(--soft);
 }
 .dpn {
@@ -1213,6 +1216,125 @@ button.pw-n {
   color: var(--soft);
   font-weight: 700;
   padding: 4px 0;
+}
+/* Progresso: treinos por ano (um quadradinho por dia) */
+.yr-y {
+  outline: none;
+}
+.yr-y:focus-visible {
+  outline: 2px solid var(--today);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.yr-y + .yr-y {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.yr-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.yr-h b {
+  font-size: 19px;
+  font-weight: 900;
+}
+.yr-h span {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.yr svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  touch-action: pan-y;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.yr text {
+  fill: var(--soft);
+  font-size: 10px;
+  font-weight: 700;
+}
+/* tons: da cor da linha (dia sem nada) até a cor do nível (dia mais pesado), em passos que o olho vê
+   iguais (a mistura em oklab não embola os tons do meio como a mistura em srgb) */
+.yc0 {
+  --yc: var(--line);
+}
+.yc1 {
+  --yc: color-mix(in oklab, var(--done) 30%, var(--line));
+}
+.yc2 {
+  --yc: color-mix(in oklab, var(--done) 53%, var(--line));
+}
+.yc3 {
+  --yc: color-mix(in oklab, var(--done) 76%, var(--line));
+}
+.yc4 {
+  --yc: var(--done);
+}
+.yr path {
+  fill: var(--yc);
+}
+.yr path.ycf {
+  fill: var(--line);
+  opacity: 0.4;
+}
+.yr rect.yh {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+.yr-d {
+  display: block;
+  min-height: 0;
+  margin: 10px 0 0;
+}
+.yr-d b {
+  display: block;
+}
+.yr-k {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--soft);
+}
+.yr-k span:first-child {
+  margin-right: 4px;
+}
+.yr-k span:last-child {
+  margin-left: 4px;
+}
+.yr-k i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--yc);
+}
+.yr .dnote {
+  margin-top: 6px;
+}
+/* tabelas com vários números (painel geral e mês a mês): cada número alinhado à direita na sua
+   coluna, com espaço entre um e outro (sem isso, 7,7 km e 79,4 kg viravam "7,779,4") */
+.dash .lc-tab th:not(:first-child),
+.dash .lc-tab td:not(:first-child),
+.yr-tab th:not(:first-child),
+.yr-tab td:not(:first-child) {
+  width: auto;
+  padding-left: 12px;
+  text-align: right;
 }
 .lp-n {
   margin: 0 0 6px;
@@ -3303,6 +3425,7 @@ button.pw-n {
 .stat b,
 .runs .top b,
 .week .hd b,
+.yr-h b,
 .wrows li b,
 .pj b,
 .lv-x {
@@ -3495,6 +3618,7 @@ button.pw-n {
     .holi,
     .wrem,
     .dash,
+    .yr,
     .week,
     .lp,
     .vol,
@@ -3537,6 +3661,7 @@ button.pw-n {
 :root[data-skin="mare"] .dk b,
 :root[data-skin="mare"] .wrows li b,
 :root[data-skin="mare"] .week .hd b,
+:root[data-skin="mare"] .yr-h b,
 :root[data-skin="mare"] .runs .top b,
 :root[data-skin="mare"] .pj b,
 :root[data-skin="mare"] .lv-x {
@@ -3756,6 +3881,7 @@ button.pw-n {
     .check,
     .runblk,
     .dash,
+    .yr,
     .week,
     .lp,
     .vol,
@@ -3873,6 +3999,7 @@ button.pw-n {
 :root[data-skin="anilha"] .dk b,
 :root[data-skin="anilha"] .wrows li b,
 :root[data-skin="anilha"] .week .hd b,
+:root[data-skin="anilha"] .yr-h b,
 :root[data-skin="anilha"] .runs .top b,
 :root[data-skin="anilha"] .pj b,
 :root[data-skin="anilha"] .lv-x {
@@ -3980,6 +4107,7 @@ button.pw-n {
     .dk b,
     .wrows li b,
     .week .hd b,
+    .yr-h b,
     .runs .top b,
     .pj b,
     .lv-x,
@@ -4976,6 +5104,7 @@ button.pw-n {
     const root = document.getElementById("root");
     root.innerHTML = html;
     if (tab === "prog" && dash) dashPick(dash.i);
+    if (tab === "prog" && yrs) for (const y in yrs.g) yrPick(+y, yrSel[y] || yrs.g[y].def);
     if (lastTab !== null && lastTab !== tab) {
       root.classList.remove("tabin");
       void root.offsetWidth;
@@ -6211,6 +6340,251 @@ button.pw-n {
     dashPick(Math.floor((vx - dash.P) / dash.cw));
   }
 
+  // ---------- treinos por ano ----------
+  // Um quadradinho por dia, como o gráfico de contribuições do GitHub: cada coluna é uma semana, de
+  // segunda (em cima) a domingo. A cor diz o peso levantado no dia (séries × repetições × kg): os treinos
+  // com peso se dividem em três tons, em terços de todos os treinos anotados, então dá pra comparar um
+  // ano com o outro. Corrida, surf e treino sem peso ficam no tom mais claro; treino de um plano antigo,
+  // sem os pesos, fica no tom do meio.
+  let yrs = null; // os dias e a geometria de cada ano desenhado (tocar num ponto acha o dia)
+  const yrSel = {}; // dia escolhido em cada ano; continua escolhido quando a tela redesenha
+  const isDayKey = (k) => /^\d{4}-\d{2}-\d{2}$/.test(k);
+  const kmShort = (v) => String(Math.round(v * 100) / 100).replace(".", ",");
+  // peso levantado num dia: o mesmo cálculo das retrospectivas (near e grip: versões rápidas pra muitos dias)
+  function dayKg(k, near, grip) {
+    const w = state.logs[k],
+      plan = PLANS[w];
+    if (!plan) return 0;
+    near = near || loadNear;
+    grip = grip || gripFor;
+    return plan.reduce(
+      (a, [n, sp]) =>
+        isKg(n) ? a + setsOf(sp) * repsOf(sp) * near(loadKey(n, grip(n, k), w === LIGHT), k) : a,
+      0,
+    );
+  }
+  function yearDays() {
+    const info = {},
+      vols = [],
+      hist = {};
+    const days = [
+      ...new Set(
+        Object.keys(state.logs)
+          .filter((k) => state.logs[k])
+          .concat(Object.keys(state.runs).filter((k) => state.runs[k])),
+      ),
+    ]
+      .filter((k) => isDayKey(k) && k <= todayKey)
+      .sort();
+    // o mesmo que loadNear, com o histórico de cada exercício ordenado uma vez só
+    const near = (lk, k) => {
+      const hs = hist[lk] || (hist[lk] = loadHist(lk));
+      let lo = 0,
+        hi = hs.length - 1,
+        v = hs.length ? hs[0].kg : 0;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (hs[mid].d <= k) {
+          v = hs[mid].kg;
+          lo = mid + 1;
+        } else hi = mid - 1;
+      }
+      return v;
+    };
+    // o mesmo que gripFor, andando pelos dias em ordem: a pegada do dia, senão a última usada antes
+    const exKeys = Object.keys(state.ex).sort(),
+      lastGrip = {},
+      anyGrip = {};
+    let ei = 0;
+    Object.keys(GRIP).forEach((n) => (anyGrip[n] = gripFor(n, "")));
+    const grip = (n, k) => {
+      const opts = GRIP[n];
+      if (!opts) return null;
+      const t = (exDay(k)._g || {})[n];
+      return opts.includes(t) ? t : lastGrip[n] || anyGrip[n];
+    };
+    days.forEach((k) => {
+      for (; ei < exKeys.length && exKeys[ei] < k; ei++) {
+        const g = exDay(exKeys[ei])._g || {};
+        for (const n in GRIP) if (GRIP[n].includes(g[n])) lastGrip[n] = g[n];
+      }
+      const w = state.logs[k] || null,
+        kg = w ? dayKg(k, near, grip) : 0;
+      info[k] = { w, kg, run: state.runs[k] || null };
+      if (kg > 0) vols.push(kg);
+    });
+    vols.sort((a, b) => a - b);
+    const cut = (p) => (vols.length ? vols[Math.floor((vols.length - 1) * p)] : 0),
+      t1 = cut(1 / 3),
+      t2 = cut(2 / 3);
+    // tom 2 a 4: terços do peso levantado. Treino do plano sem nenhum peso anotado ainda: 2. Treino de um
+    // plano antigo (sem os pesos): 3, o do meio. Corrida sozinha, surf e outro: 1.
+    const old = (w) => w && !PLANS[w] && w !== "Outro" && w !== "Surf";
+    for (const k in info) {
+      const x = info[k];
+      x.lv = x.kg > 0 ? (x.kg <= t1 ? 2 : x.kg <= t2 ? 3 : 4) : old(x.w) ? 3 : x.w && PLANS[x.w] ? 2 : 1;
+    }
+    return info;
+  }
+  function yearsHTML() {
+    const info = yearDays(),
+      ks = Object.keys(info),
+      first = ks.length && ks[0] < START ? ks[0] : START,
+      thisY = today.getFullYear();
+    const years = [...new Set(ks.map((k) => +k.slice(0, 4)).concat(thisY))].sort((a, b) => b - a);
+    // a largura de verdade do quadro, pra letra sair no tamanho certo (os visuais com cartão têm margem)
+    const inner = skin === "mare" ? 32 : skin === "anilha" ? 30 : 0,
+      W = Math.round(
+        Math.max(236, Math.min(516, (document.documentElement.clientWidth || 390) - 44) - inner),
+      ),
+      L = 25,
+      T = 15,
+      f1 = (v) => v.toFixed(1);
+    yrs = { info, first, g: {} };
+    let h = `<h2>Treinos por ano</h2><section class="yr">`;
+    years.forEach((y) => {
+      const start = monday(new Date(y, 0, 1)),
+        days = Math.round((new Date(y, 11, 31) - start) / dayMs) + 1,
+        cols = Math.ceil(days / 7),
+        st = (W - L) / cols,
+        cs = st - (st >= 8 ? 2 : 1),
+        rx = Math.min(2, cs / 4),
+        H = Math.ceil(T + 7 * st),
+        mine = ks.filter((k) => k.slice(0, 4) === String(y));
+      let g = "";
+      // o nome do mês no meio das semanas dele; no celular estreito, um mês sim e outro não (com menos de
+      // 5,25 px por semana, dois nomes de mês vizinhos ficam a menos de 3 px um do outro)
+      const every = st < 5.25 ? 2 : 1;
+      for (let m = 0; m < 12; m += every) {
+        const a = Math.floor(Math.round((new Date(y, m, 1) - start) / dayMs) / 7),
+          b = Math.floor(Math.round((new Date(y, m + 1, 0) - start) / dayMs) / 7);
+        g += `<text class="ym" x="${f1(L + ((a + b + 1) / 2) * st - (st - cs) / 2)}" y="10" text-anchor="middle">${MESES[m].slice(0, 3)}</text>`;
+      }
+      // dias da semana: seg, qua, sex e dom; se a linha ficar baixa demais pra letra, seg, qui e dom
+      const wf = Math.min(10, 2 * st - 1.5),
+        wl =
+          wf >= 9
+            ? [
+                ["seg", 0],
+                ["qua", 2],
+                ["sex", 4],
+                ["dom", 6],
+              ]
+            : [
+                ["seg", 0],
+                ["qui", 3],
+                ["dom", 6],
+              ],
+        wsz = wf >= 9 ? wf : Math.min(10, 3 * st - 2);
+      wl.forEach(
+        ([t, r]) =>
+          (g += `<text class="yw" x="0" y="${f1(T + r * st + cs / 2 + wsz * 0.36)}" style="font-size:${f1(wsz)}px">${t}</text>`),
+      );
+      // um desenho por tom, com todos os quadradinhos dele (e não um elemento por dia): a tela
+      // redesenha rápido mesmo com anos de treino
+      const sq = {},
+        r = f1(rx),
+        e = f1(cs - 2 * rx),
+        cell = `h${e}a${r} ${r} 0 0 1 ${r} ${r}v${e}a${r} ${r} 0 0 1-${r} ${r}h-${e}a${r} ${r} 0 0 1-${r}-${r}v-${e}a${r} ${r} 0 0 1 ${r}-${r}z`;
+      for (let i = 0; i < cols * 7; i++) {
+        const d = new Date(start);
+        d.setDate(start.getDate() + i);
+        if (d.getFullYear() !== y) continue;
+        const k = key(d),
+          x = info[k],
+          cls = k > todayKey || k < first ? "ycf" : x ? "yc" + x.lv : "yc0";
+        (sq[cls] = sq[cls] || []).push(
+          `M${f1(L + Math.floor(i / 7) * st + rx)} ${f1(T + (i % 7) * st)}${cell}`,
+        );
+      }
+      for (const c in sq) g += `<path class="${c}" d="${sq[c].join("")}"/>`;
+      g += `<rect class="yh" x="0" y="0" width="${f1(cs + 2)}" height="${f1(cs + 2)}" rx="${f1(rx + 1)}"/>`;
+      // escolhido de antes; senão o último dia com treino ou corrida; senão hoje (ou o fim do ano)
+      const def = mine.length ? mine[mine.length - 1] : y === thisY ? todayKey : `${y}-12-31`;
+      yrs.g[y] = { start: key(start), cols, st, cs, L, T, W, def };
+      const n = mine.filter((k) => info[k].w).length,
+        nr = mine.filter((k) => info[k].run).length;
+      h += `<div class="yr-y" data-y="${y}" tabindex="0" aria-label="Treinos de ${y}, um quadrado por dia. Use as setas pra trocar de dia.">
+        <div class="yr-h"><b>${y}</b><span>${n} ${sOf(n, "treino", "treinos")}${nr ? ` e ${nr} ${sOf(nr, "corrida", "corridas")}` : ""}</span></div>
+        <svg viewBox="0 0 ${W} ${H}" aria-hidden="true">${g}</svg>
+        <p class="yr-d" aria-live="polite"></p></div>`;
+    });
+    h += `<div class="yr-k" aria-hidden="true"><span>Menos</span>${[0, 1, 2, 3, 4].map((i) => `<i class="yc${i}"></i>`).join("")}<span>Mais</span></div>`;
+    h += `<p class="dnote">Cor mais forte, mais peso levantado no dia (séries × repetições × kg). Corrida, surf e treino sem peso ficam no tom mais claro.</p>`;
+    // tabela: o mesmo, mês a mês
+    const months = {};
+    ks.forEach((k) => {
+      const m = (months[k.slice(0, 7)] = months[k.slice(0, 7)] || { n: 0, r: 0, kg: 0 });
+      if (info[k].w) m.n++;
+      if (info[k].run) m.r++;
+      m.kg += info[k].kg;
+    });
+    const rows = [];
+    for (
+      let d = new Date(thisY, today.getMonth(), 1);
+      key(d) >= first.slice(0, 7) + "-01";
+      d.setMonth(d.getMonth() - 1)
+    ) {
+      const mk = key(d).slice(0, 7),
+        m = months[mk] || { n: 0, r: 0, kg: 0 };
+      rows.push(
+        `<tr><td>${MESES[d.getMonth()].slice(0, 3)} ${d.getFullYear()}</td><td>${m.n}</td><td>${m.r}</td><td>${m.kg ? nfmt(Math.round(m.kg)) : "—"}</td></tr>`,
+      );
+    }
+    h += `<details class="lc-tab yr-tab"><summary>Ver por mês</summary><table><thead><tr><th>Mês</th><th>Treinos</th><th>Corridas</th><th>Kg levantados</th></tr></thead><tbody>${rows.join("")}</tbody></table></details></section>`;
+    return h;
+  }
+  // marca o dia k no quadro do ano y e escreve o que teve nele
+  function yrPick(y, k) {
+    const g = yrs && yrs.g[y],
+      el = document.querySelector(`.yr-y[data-y="${y}"]`);
+    if (!g || !el) return;
+    if (k < `${y}-01-01`) k = `${y}-01-01`;
+    if (k > `${y}-12-31`) k = `${y}-12-31`;
+    yrSel[y] = k;
+    const i = Math.round((parse(k) - parse(g.start)) / dayMs),
+      ring = el.querySelector(".yh");
+    ring.setAttribute("x", (g.L + Math.floor(i / 7) * g.st - 1).toFixed(1));
+    ring.setAttribute("y", (g.T + (i % 7) * g.st - 1).toFixed(1));
+    const d = parse(k),
+      x = yrs.info[k];
+    let t;
+    if (k > todayKey) t = "Ainda não chegou.";
+    else if (k < yrs.first) t = "Antes do app.";
+    else if (!x)
+      t =
+        k === todayKey
+          ? "Ainda sem treino."
+          : HOLIDAYS[k]
+            ? `Sem treino. Feriado: ${HOLIDAYS[k]}.`
+            : "Sem treino.";
+    else {
+      const p = [];
+      if (x.w)
+        p.push(
+          (x.w === "Outro" ? "Outro treino" : x.w) +
+            (x.kg > 0 ? `: ${nfmt(Math.round(x.kg))} kg levantados` : "") +
+            ".",
+        );
+      if (x.run) p.push(x.run.km ? `Corrida de ${kmShort(x.run.km)} km.` : "Corrida.");
+      t = p.join(" ");
+    }
+    el.querySelector(".yr-d").innerHTML =
+      `<b>${k === todayKey ? "Hoje" : WDFULL[d.getDay()]}, ${fmtD(k)}</b><span>${esc(t)}</span>`;
+  }
+  function yrAt(e) {
+    const svg = e.target.closest && e.target.closest(".yr-y svg");
+    if (!svg || !yrs) return;
+    const y = +svg.parentNode.dataset.y,
+      g = yrs.g[y];
+    if (!g) return;
+    const box = svg.getBoundingClientRect(),
+      sc = g.W / box.width,
+      c = Math.max(0, Math.min(g.cols - 1, Math.floor(((e.clientX - box.left) * sc - g.L) / g.st))),
+      r = Math.max(0, Math.min(6, Math.floor(((e.clientY - box.top) * sc - g.T) / g.st)));
+    yrPick(y, addD(g.start, c * 7 + r));
+  }
+
   function skinsHTML(s) {
     // as miniaturas mostram o app de quem está olhando: a cor do nível, o número do contador e o sol no ponto certo
     const n = levelInfo(s).n,
@@ -6334,7 +6708,7 @@ button.pw-n {
 
   function progHTML(s) {
     // painel e retrospectivas em cima; depois a semana e os detalhes de cada coisa
-    let html = dashHTML(s) + recapListHTML() + weekSummaryHTML(s);
+    let html = dashHTML(s) + yearsHTML() + recapListHTML() + weekSummaryHTML(s);
     html += loadsProgHTML() + volumeHTML() + barHTML() + runsHTML() + weighHTML();
     html += `<h2>Nível</h2>` + levelHTML(s);
     html += `<button class="lnk lvt" data-act="lvopen" aria-expanded="${lvOpen}">${lvOpen ? "Esconder os níveis" : "Ver todos os níveis e como ganhar XP"}</button>`;
@@ -6670,12 +7044,12 @@ button.pw-n {
       if (typeof state.hr[k] === "number") r.hours.push(state.hr[k]);
       const plan = PLANS[w];
       if (plan) {
-        plan.forEach(([n, sp, g]) => {
+        plan.forEach(([, sp, g]) => {
           const s = setsOf(sp);
           r.sets += s;
           r.muscles[muscleOf(g)] += s;
-          if (isKg(n)) r.kg += s * repsOf(sp) * loadNear(loadKey(n, gripFor(n, k), w === LIGHT), k);
         });
+        r.kg += dayKg(k);
       } else if (w !== "Outro" && w !== "Surf") r.legacy++; // treino de um plano antigo
       if (!run) runFrom = k;
       run++;
@@ -8910,6 +9284,10 @@ button.pw-n {
   document.addEventListener("pointermove", (e) => {
     if (e.pointerType === "mouse" || e.buttons) dashAt(e);
   });
+  document.addEventListener("pointerdown", yrAt);
+  document.addEventListener("pointermove", (e) => {
+    if (e.pointerType === "mouse" || e.buttons) yrAt(e);
+  });
   document.addEventListener("focusin", (e) => {
     const el = e.target.closest && e.target.closest(".lc");
     if (el && e.target.tagName.toLowerCase() === "svg" && charts[el.dataset.lc])
@@ -8923,6 +9301,14 @@ button.pw-n {
       (e.key === "ArrowLeft" || e.key === "ArrowRight")
     ) {
       dashPick(dash.i + (e.key === "ArrowRight" ? 1 : -1));
+      e.preventDefault();
+      return;
+    }
+    // treinos por ano: pros lados troca de semana, pra cima e pra baixo troca de dia
+    const yk = { ArrowLeft: -7, ArrowRight: 7, ArrowUp: -1, ArrowDown: 1 }[e.key];
+    if (yk && e.target.classList && e.target.classList.contains("yr-y") && yrs) {
+      const y = +e.target.dataset.y;
+      yrPick(y, addD(yrSel[y] || yrs.g[y].def, yk));
       e.preventDefault();
       return;
     }
