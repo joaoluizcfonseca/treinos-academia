@@ -198,3 +198,16 @@ def test_the_service_worker_keeps_every_file_the_app_needs():
         assert (ROOT / f[2:]).exists(), f
     app = (ROOT / "index.html").read_text(encoding="utf-8")
     assert STATE_RE.search(app).group(2).strip() == "{}", "o repositório vai sem dados de ninguém"
+
+
+def test_only_the_app_address_opens_the_app(site, phone):
+    """O service worker abre o app só pelo endereço dele; o endereço de um arquivo mostra o arquivo."""
+    url, _, _ = site
+    page, errors = phone(url)
+    ready(page)
+    page.goto(url + "manifest.webmanifest")
+    assert '"short_name": "Treinos"' in page.content()
+    page.goto(url + "index.html")
+    page.wait_for_timeout(300)
+    assert page.locator('[data-nav="hoje"]').count() == 1
+    assert errors == []
