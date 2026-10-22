@@ -11,7 +11,7 @@
   <img alt="Projeto de uso pessoal" src="https://img.shields.io/badge/projeto-uso%20pessoal-0D3B4F?style=flat-square">
   <img alt="PWA que funciona offline" src="https://img.shields.io/badge/PWA-funciona%20offline-D97F00?style=flat-square">
   <img alt="HTML, CSS e JavaScript sem dependências" src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-sem%20depend%C3%AAncias-23949D?style=flat-square">
-  <img alt="135 testes com Playwright" src="https://img.shields.io/badge/testes-135%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
+  <img alt="138 testes com Playwright" src="https://img.shields.io/badge/testes-138%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@
 
 ### Treino
 
-- **Treino do dia:** os exercícios com o peso da última vez já preenchido. Um toque em *Terminei o treino* registra tudo, sem marcar série por série.
+- **Treino do dia:** um treino para cada dia, de segunda a sábado, com o peso da última vez já preenchido em cada exercício. Um toque em *Terminei o treino* registra tudo, sem marcar série por série. A meta é de 5 treinos na semana; o sábado é uma chance a mais de fechar a semana e, se ficar sem treino, não quebra a sequência.
 - **Pesos por exercício:** histórico, recordes e gráfico de evolução. A puxada guarda um peso para cada pegada.
 - **Montar o treino:** criar exercício novo (ou escolher um que já existe, com os pesos dele), marcar os dias em que ele entra, mudar séries e repetições, reordenar e excluir, com desfazer. A mudança vale a partir do dia em que foi feita: os treinos que já passaram continuam contando como foram.
 - **Sugestão de carga:** quando o peso de um exercício se repete três vezes seguidas, o app sugere subir.
@@ -129,7 +129,7 @@ No computador, basta abrir o `index.html` no navegador.
 
 ## Testes
 
-São 135 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
+São 138 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
 
 ```bash
 pip install -r requirements-dev.txt
@@ -139,7 +139,7 @@ pytest
 
 Eles cobrem:
 
-- **Treino:** do começo ao fim, com pesos, pegadas, sugestão de carga, treinos esquecidos e desmarcar sem deixar dados para trás.
+- **Treino:** do começo ao fim, com pesos, pegadas, sugestão de carga, o treino de sábado, treinos esquecidos e desmarcar sem deixar dados para trás.
 - **Cálculos:** sequência, nível, séries por músculo, painel geral e evolução das cargas.
 - **Montar o treino:** exercício novo e já existente, dias, séries, ordem, excluir com desfazer, o histórico intacto e telas pequenas.
 - **Treinos por ano:** o tom de cada dia pelo peso levantado, toque, arrasto e setas, vários anos e a mesma conta da retrospectiva.

@@ -5066,19 +5066,24 @@ button.pw-n {
   document.documentElement.lang = "pt-BR";
   const SUMMER = "2026-12-21";
   const START = "2026-09-14";
+  // Treino de cada dia. A meta da semana é de 5 treinos; o sábado é uma chance a mais de fechar a semana
+  // (pular o sábado não quebra a sequência nem aparece como dia esquecido).
   const SPLIT = {
     1: "Peito e tríceps",
     2: "Costas e bíceps",
     3: "Ombro e abdômen",
     4: "Peito e costas",
     5: "Tríceps e braço",
+    6: "Ombro e peito",
   };
+  const SPLIT_DAYS = Object.keys(SPLIT).map(Number);
   const TYPES = [
     "Peito e tríceps",
     "Costas e bíceps",
     "Ombro e abdômen",
     "Peito e costas",
     "Tríceps e braço",
+    "Ombro e peito",
     "Peito e costas leve",
     "Surf",
     "Outro",
@@ -5130,6 +5135,16 @@ button.pw-n {
       ["Antebraço com halter", "3x15", "Antebraço"],
       ["Pendurar na barra", "3x25s", "Antebraço"],
     ],
+    // sábado: o ombro ganha o segundo dia da semana, junto com a parte de cima do peito
+    "Ombro e peito": [
+      ["Ombro na máquina", "3x10", "Ombro"],
+      ["Elevação lateral", "3x12", "Ombro"],
+      ["Supino inclinado máquina", "3x10", "Peito"],
+      ["Voador invertido (costas)", "3x12", "Costas/ombro"],
+      ["Abdômen na máquina", "3x15", "Abdômen"],
+      ["Pendurar na barra", "3x25s", "Antebraço"],
+    ],
+    // treino leve: era o do sábado; continua pra escolher em "Fiz outro treino hoje"
     "Peito e costas leve": [
       ["Supino sentado", "2x10", "Peito"],
       ["Remada com apoio no peito", "2x10", "Costas"],
@@ -5138,7 +5153,7 @@ button.pw-n {
     ],
   };
   const LIGHT = "Peito e costas leve";
-  const OPTIONAL = { 6: LIGHT }; // sábado: treino leve, opcional
+  const OPTIONAL = {}; // dia com treino opcional (o sábado deixou de ser: virou o Ombro e peito)
   const NOLOAD = /Prancha|Flexão|Escapular/; // peso do corpo: sem número pra anotar
   const GRIP = { Puxada: ["Aberta", "Fechada", "Triângulo", "Supinada"] }; // a carga é guardada por pegada
   // Na barra fixa o número anotado é tempo ou repetições, não carga.
@@ -5168,7 +5183,6 @@ button.pw-n {
     "Rosca inversa": "Antebraço com halter",
   };
   const LEGACY = {
-    "Supino inclinado máquina": "Peito",
     "Rosca martelo": "Bíceps",
     "Elevação frontal": "Ombro",
     "Elevação lateral leve": "Ombro",
@@ -5531,17 +5545,18 @@ button.pw-n {
   function headline(s) {
     if (s.total === 0) return "Marca o primeiro treino.";
     if (s.week >= 5) return s.week > 5 ? `Semana fechada com ${s.week} treinos.` : "Semana fechada: 5 de 5.";
+    // dias de treino que ainda faltam na semana (de hoje até sábado; domingo é descanso)
     const wd = today.getDay();
     let restantes = 0;
-    for (let i = wd >= 1 && wd <= 5 ? wd : 6; i <= 5; i++) {
+    for (let i = wd; wd > 0 && i <= 6; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() + (i - wd));
-      if (!state.logs[key(d)]) restantes++;
+      if (SPLIT[i] && !state.logs[key(d)]) restantes++;
     }
     const missing = 5 - s.week;
     if (restantes === 0) return `Semana terminou em ${s.week} de 5.`;
     if (missing > restantes) return `Dá pra fazer mais ${restantes} esta semana.`;
-    return `Faltam ${missing} treino${missing > 1 ? "s" : ""} pra fechar a semana.`;
+    return `${missing > 1 ? "Faltam" : "Falta"} ${missing} treino${missing > 1 ? "s" : ""} pra fechar a semana.`;
   }
 
   function badges(s) {
@@ -6198,7 +6213,7 @@ button.pw-n {
   function plannedWeekSets() {
     const o = {};
     MUSCLES.forEach((m) => (o[m] = 0));
-    for (let w = 1; w <= 5; w++)
+    for (const w of SPLIT_DAYS)
       (planOf(SPLIT[w]) || []).forEach(([, sp, g]) => {
         o[muscleOf(g)] += setsOf(sp);
       });
@@ -6420,7 +6435,7 @@ button.pw-n {
         `<p class="lp-n">Anota os pesos no treino e aqui aparece quanto cada exercício subiu.</p></section>`
       );
     const ups = rows.filter((r) => r.b > r.a).length,
-      planKeys = [1, 2, 3, 4, 5].flatMap((i) => pesoRows(SPLIT[i]));
+      planKeys = SPLIT_DAYS.flatMap((i) => pesoRows(SPLIT[i]));
     h += `<p class="lp-n">A carga subiu em ${ups} de ${rows.length} exercícios desde o primeiro registro. Toca num exercício pra ver o gráfico.</p><ul class="lp-l">`;
     rows.forEach((r) => {
       const d = r.b - r.a;
@@ -6451,7 +6466,7 @@ button.pw-n {
   // Cada treino abre a lista dos exercícios com o peso que você usa hoje. Mudou o peso? Anota aqui ou no treino.
   // "Editar exercícios" vira a lista do treino pra montar: subir e descer, mudar séries e repetições e excluir
   // (com desfazer). "Novo exercício" cria um exercício (ou pega um que já existe) e põe nos dias escolhidos.
-  // os treinos da semana, na ordem dos dias: de segunda a sexta e o leve de sábado
+  // os treinos da semana, na ordem dos dias: de segunda a sábado
   const weekWorkouts = () => [1, 2, 3, 4, 5, 6].map((d) => SPLIT[d] || OPTIONAL[d]).filter(Boolean);
   function dayOfWorkout(w) {
     for (let d = 1; d <= 6; d++) if ((SPLIT[d] || OPTIONAL[d]) === w) return d;
@@ -7984,7 +7999,7 @@ button.pw-n {
       if (run >= r.best.n) r.best = { n: run, from: runFrom, to: k };
     }
     // treinos de planos antigos entram com as séries de um treino médio do plano atual
-    const avg = Math.round([1, 2, 3, 4, 5].reduce((a, i) => a + planSets(SPLIT[i]), 0) / 5);
+    const avg = Math.round(SPLIT_DAYS.reduce((a, i) => a + planSets(SPLIT[i]), 0) / SPLIT_DAYS.length);
     r.setsAll = r.sets + r.legacy * avg;
     r.pct = r.work ? Math.min(100, Math.round((r.onWork / r.work) * 100)) : 0;
     r.top = Object.keys(r.types)
@@ -8693,9 +8708,10 @@ button.pw-n {
     if (extra.persona) rows.push(["Perfil", extra.persona]);
     if (extra.level) rows.push(["Nível", extra.level]);
     const title = R.season ? (done ? "Meu verão 2026" : "Meu verão até agora") : `Meu ${R.mes}`;
+    const daysLeft = Math.max(0, Math.round((parse(SUMMER) - today) / dayMs));
     const tip =
       R.season && !done
-        ? `Faltam ${Math.max(0, Math.round((parse(SUMMER) - today) / dayMs))} dias. A completa sai em 21/12.`
+        ? `${daysLeft === 1 ? "Falta 1 dia" : `Faltam ${daysLeft} dias`}. A completa sai em 21/12.`
         : "Tira um print e manda pros amigos.";
     return `<div class="wr-post"><div class="wp-h"><span>Treinos até o verão</span><b>${title}</b><em>${fmtD(R.from)} a ${fmtD(r.end)}</em></div>
       <dl class="wp-g">${tiles
@@ -9646,7 +9662,7 @@ button.pw-n {
     const L = levelInfo(s);
     const pct = L.to ? ((L.x - L.from) / (L.to - L.from)) * 100 : 100;
     const msg = L.to
-      ? `Faltam ${L.to - L.x} XP pro nível ${L.n + 1}, ${L.nextName}.`
+      ? `${L.to - L.x === 1 ? "Falta" : "Faltam"} ${L.to - L.x} XP pro nível ${L.n + 1}, ${L.nextName}.`
       : "Nível máximo. Agora é manter.";
     return `<section class="lvl"><div class="lv-top"><span class="lv-n">Nível ${L.n}</span><b>${esc(L.name)}</b><span class="lv-x">${L.x} XP</span></div>
       <div class="lv-bar"><i style="width:${pct.toFixed(1)}%"></i></div><p>${esc(msg)}</p></section>`;
@@ -9660,7 +9676,7 @@ button.pw-n {
     el.className = "xpt";
     el.setAttribute("role", "status");
     el.innerHTML = `<b>+${gain} XP</b><div class="xt-m"><span>${esc(xpReason || "XP ganho")}</span><div class="xt-bar"><i style="width:${before.toFixed(1)}%"></i></div>
-      <em>Nível ${L.n}, ${esc(L.name)}${L.to ? `. Faltam ${L.to - L.x} XP.` : ""}</em></div>`;
+      <em>Nível ${L.n}, ${esc(L.name)}${L.to ? `. ${L.to - L.x === 1 ? "Falta" : "Faltam"} ${L.to - L.x} XP.` : ""}</em></div>`;
     document.body.appendChild(el);
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
@@ -10127,7 +10143,7 @@ button.pw-n {
     if (t.dataset.lp) {
       // da evolução no Progresso pro gráfico na aba Pesos
       const k = t.dataset.lp,
-        w = [1, 2, 3, 4, 5].map((i) => SPLIT[i]).find((x) => pesoRows(x).includes(k));
+        w = SPLIT_DAYS.map((i) => SPLIT[i]).find((x) => pesoRows(x).includes(k));
       tab = "pesos";
       if (w) ldOpen = w;
       chartOpen = k;
