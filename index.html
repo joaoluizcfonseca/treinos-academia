@@ -12,6 +12,7 @@
   --on-done: #150800; /* texto em cima da cor do nível; o app troca pra branco quando contrasta mais */
   --today: #ffb547;
   --run: #5cb8ff;
+  --del: #ff6b6b;
   color-scheme: dark;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -26,6 +27,7 @@
   --soft: #666666;
   --today: #b5650a;
   --run: #1570d6;
+  --del: #d93036;
   color-scheme: light;
 }
 
@@ -951,6 +953,427 @@ button.pw-n {
 }
 .pw-l li.open .ci {
   color: var(--done);
+}
+
+/* Aba Pesos: montar o treino (novo exercício, ordem, séries e excluir) */
+.pe-new,
+.pe-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px dashed color-mix(in srgb, var(--soft) 70%, transparent);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pe-new {
+  width: 100%;
+  margin: 2px 0 6px;
+  padding: 13px 16px;
+}
+.pe-new svg,
+.pe-add svg,
+.pe-go svg,
+.pe-rm svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.pe-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  padding: 10px 2px 12px;
+  border: 0;
+  background: none;
+  color: var(--soft);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pe-n {
+  margin: 0 0 4px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--soft);
+}
+.pe-e {
+  margin: 4px 0 12px;
+  font-size: 14px;
+  color: var(--soft);
+}
+.pe-l {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pe-l li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+}
+.pe-mv {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  margin-left: -6px;
+}
+.pe-mv button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--soft);
+  cursor: pointer;
+}
+.pe-mv svg {
+  width: 18px;
+  height: 18px;
+}
+.pe-mv button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+.pe-x {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.pe-x b {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.pe-x span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--soft);
+}
+.pe-x span svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  opacity: 0.8;
+}
+.pe-del {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  margin-right: -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--soft);
+  cursor: pointer;
+}
+.pe-del svg {
+  width: 20px;
+  height: 20px;
+}
+.pe-del:hover,
+.pe-del:focus-visible {
+  color: var(--del);
+}
+.pe-a {
+  display: flex;
+  gap: 10px;
+  padding: 12px 0 16px;
+  border-top: 1px solid var(--line);
+}
+.pe-add {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 10px;
+}
+.pe-ok {
+  flex: none;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--done);
+  color: var(--on-done);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.pe-l li.new {
+  animation: peNew 1.8s ease-out;
+}
+@keyframes peNew {
+  from {
+    background: color-mix(in srgb, var(--done) 24%, transparent);
+  }
+}
+.pw.editing .pw-h em {
+  color: var(--done);
+  font-weight: 700;
+}
+/* folha de exercício */
+.sheet.still {
+  animation: none;
+}
+.xs .sh-h {
+  margin-bottom: 16px;
+}
+.xf {
+  display: block;
+  margin: 0 0 14px;
+}
+.xf-l {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--soft);
+}
+.xf input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 12px;
+  font: inherit;
+  font-size: 16px;
+}
+.xs-sug {
+  display: grid;
+  gap: 6px;
+  margin: -6px 0 14px;
+}
+.xs-sug:empty,
+.xs-hint:empty,
+.xs-err:empty {
+  display: none;
+}
+.xs-s {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.xs-s b {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+}
+.xs-s span {
+  display: block;
+  font-size: 12px;
+  color: var(--soft);
+}
+.xs-hint {
+  margin: -6px 0 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--soft);
+}
+.xs-days {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.xs-day {
+  min-width: 0;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.xs-day b {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+}
+.xs-day span {
+  display: block;
+  font-size: 12px;
+  color: var(--soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.xs-day[aria-pressed="true"] {
+  border-color: var(--done);
+  background: color-mix(in srgb, var(--done) 14%, transparent);
+  box-shadow: inset 0 0 0 1px var(--done);
+}
+.xs-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.stp {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.stp button {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+}
+.stp output {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.xs-unit {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+.xs-unit button {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 2px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--soft);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.xs-unit button[aria-pressed="true"] {
+  background: var(--paper2);
+  color: var(--ink);
+}
+.xs-ch {
+  margin-bottom: 0;
+}
+.chip:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.chip[aria-pressed="true"]:disabled {
+  opacity: 0.75;
+}
+.xs-err {
+  margin: 0 0 12px;
+}
+.pe-rm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  border: 0;
+  background: none;
+  color: var(--del);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+/* aviso embaixo, com desfazer */
+.snack {
+  position: fixed;
+  z-index: 34;
+  left: 50%;
+  bottom: calc(86px + env(safe-area-inset-bottom, 0px));
+  width: min(92vw, 420px);
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px 10px 16px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.snack.in {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+.snack span {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.35;
+}
+.snack button {
+  flex: none;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+/* Hoje: os dois links embaixo do botão de terminar */
+.ck-a {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 22px;
+  margin-top: 6px;
+}
+.ck-a .swapl {
+  margin: 0;
 }
 
 /* Gráfico de evolução */
@@ -3683,6 +4106,7 @@ button.pw-n {
   letter-spacing: -0.03em;
 }
 :root[data-skin="mare"] .kg input,
+:root[data-skin="mare"] .xf input,
 :root[data-skin="mare"] .rin input,
 :root[data-skin="mare"] .weigh input,
 :root[data-skin="mare"] .wrem input {
@@ -3695,6 +4119,10 @@ button.pw-n {
     .go,
     .chip,
     .grip,
+    .pe-new,
+    .pe-add,
+    .pe-ok,
+    .stp button,
     .runbtn,
     .rin button,
     .weigh button,
@@ -3955,6 +4383,14 @@ button.pw-n {
     .go,
     .chip,
     .grip,
+    .pe-new,
+    .pe-add,
+    .pe-ok,
+    .stp button,
+    .xs-day,
+    .xs-s,
+    .xf input,
+    .snack,
     .runbtn,
     .rin button,
     .weigh button,
@@ -4122,6 +4558,7 @@ button.pw-n {
     .pw-h b,
     .go,
     .kg input,
+    .xf input,
     .rin input,
     .weigh input,
     .wrem input
@@ -4213,7 +4650,7 @@ button.pw-n {
 :root[data-skin="caderno"] .exi {
   border-top-color: var(--rule);
 }
-:root[data-skin="caderno"] :is(.kg input, .rin input, .weigh input, .wrem input) {
+:root[data-skin="caderno"] :is(.kg input, .xf input, .rin input, .weigh input, .wrem input) {
   border: 0;
   border-bottom: 2px solid var(--soft);
   border-radius: 0;
@@ -4324,6 +4761,34 @@ button.pw-n {
 :root[data-skin="caderno"] .d.today {
   box-shadow: inset 0 0 0 2.5px var(--today);
 }
+/* montar o treino em cada visual */
+:root[data-skin="mare"] :is(.xs-day, .xs-s) {
+  border-radius: 14px;
+}
+:root[data-skin="mare"] .snack {
+  border-radius: 16px;
+}
+:root[data-skin="mare"] .pe-new {
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+}
+:root[data-skin="mare"] .pw.editing {
+  box-shadow: 0 0 0 2px var(--done);
+}
+:root[data-skin="anilha"] .pe-ok {
+  font-weight: 900;
+  font-variation-settings: "wdth" 66;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+:root[data-skin="anilha"] .pw.editing {
+  border-color: var(--done);
+}
+:root[data-skin="caderno"] .pe-ok {
+  font-family: "Kalam", "Comic Neue", cursive;
+  font-size: 18px;
+  font-weight: 700;
+}
+
 /* números do painel: letras mais largas que a Archivo condensada */
 :root[data-skin="mare"] .dk b {
   font-size: clamp(17px, 5.3vw, 22px);
@@ -4682,7 +5147,11 @@ button.pw-n {
   const UNIT = { [HANG]: "s", [NEG]: "reps" };
   const BAR_GOALS = { [HANG]: 30, [NEG]: 5 }; // metas antes de tentar a primeira barra
   const unitOf = (n) => UNIT[n] || "kg";
-  const isKg = (n) => !NOLOAD.test(n) && !UNIT[n];
+  // tipo do exercício: "kg" (anota o peso), "corpo" (peso do corpo, sem número pra anotar) ou a unidade da
+  // barra fixa. Exercício criado no app guarda o tipo dele no plano (veja planOf).
+  const exKind = (n) => customKinds()[n] || UNIT[n] || (NOLOAD.test(n) ? "corpo" : "kg");
+  const isKg = (n) => exKind(n) === "kg";
+  const isBody = (n) => exKind(n) === "corpo";
   // nomes antigos -> nomes novos (o que já foi anotado continua contando)
   const ALIAS = {
     "Chest press": "Supino sentado",
@@ -4704,7 +5173,7 @@ button.pw-n {
     "Elevação frontal": "Ombro",
     "Elevação lateral leve": "Ombro",
   };
-  const MUSCLES = ["Peito", "Costas", "Ombro", "Bíceps", "Tríceps", "Antebraço", "Abdômen"];
+  const MUSCLES = ["Peito", "Costas", "Ombro", "Bíceps", "Tríceps", "Antebraço", "Abdômen", "Pernas"];
   const muscleOf = (g) => (g === "Costas/ombro" ? "Costas" : g);
   const setsOf = (spec) => parseInt(spec, 10) || 3;
   const EXINFO = {};
@@ -4717,7 +5186,22 @@ button.pw-n {
     if (!EXINFO[n]) EXINFO[n] = { sp: "3x10", g: LEGACY[n] };
   });
   const WDFULL = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-  const KEYS = ["logs", "runs", "ex", "weight", "loads", "habits", "chal", "hr", "sec", "flash", "supp"]; // habits/chal/flash/supp: dados de funções antigas, só guardados
+  // plan: o plano editado no app (dia da mudança -> treino -> exercícios). habits/chal/flash/supp: dados de
+  // funções antigas, só guardados.
+  const KEYS = [
+    "logs",
+    "runs",
+    "ex",
+    "weight",
+    "loads",
+    "habits",
+    "chal",
+    "hr",
+    "sec",
+    "flash",
+    "supp",
+    "plan",
+  ];
   let state;
   try {
     state = JSON.parse(document.getElementById("state").textContent);
@@ -4732,7 +5216,7 @@ button.pw-n {
   // O que ficou só no celular. Feito em cima desta mesma versão: vale inteiro. Feito em cima de uma
   // versão anterior (saiu outra versão antes de publicar, ou a publicação falhou): entra o que falta
   // aqui, pra anotação não se perder. Rascunho parado há mais de 3 dias é descartado.
-  const DEEP = { loads: 1, supp: 1, ex: 1 }; // nesses, junta dia a dia e item a item
+  const DEEP = { loads: 1, supp: 1, ex: 1, plan: 1 }; // nesses, junta dia a dia e item a item
   const isObj = (v) => !!v && typeof v === "object" && !Array.isArray(v);
   function mergeAdds(src) {
     let n = 0;
@@ -4756,6 +5240,54 @@ button.pw-n {
       }
     });
     return n;
+  }
+  // ---------- plano de treino editável ----------
+  // Cada treino pode ganhar exercício novo, perder um, mudar a ordem, as séries e as repetições. A mudança
+  // fica em state.plan com a data do dia em que foi feita (dia -> treino -> exercícios), e cada dia usa o
+  // plano que valia nele: retrospectivas, volume e o quadro do ano contam os treinos que já passaram do jeito
+  // que eles foram feitos. Sem mudança nenhuma, vale o plano de sempre (PLANS).
+  const DAYK = /^\d{4}-\d{2}-\d{2}$/;
+  const validEx = (e) =>
+    Array.isArray(e) &&
+    typeof e[0] === "string" &&
+    !!e[0].trim() &&
+    typeof e[1] === "string" &&
+    typeof e[2] === "string";
+  function planOf(w, k) {
+    k = k || todayKey;
+    const ds = Object.keys(state.plan)
+      .filter((d) => DAYK.test(d) && d <= k)
+      .sort();
+    for (let i = ds.length - 1; i >= 0; i--) {
+      const l = isObj(state.plan[ds[i]]) ? state.plan[ds[i]][w] : null;
+      if (Array.isArray(l)) return l.filter(validEx);
+    }
+    return PLANS[w] || null;
+  }
+  let kindMemo = null; // nome -> tipo, dos exercícios criados no app (refeito quando o plano muda)
+  function customKinds() {
+    if (kindMemo) return kindMemo;
+    const m = {};
+    Object.keys(state.plan)
+      .sort()
+      .forEach((d) => {
+        const day = state.plan[d];
+        if (!isObj(day)) return;
+        for (const w in day)
+          if (Array.isArray(day[w]))
+            day[w].forEach((e) => {
+              if (validEx(e) && (e[3] === "kg" || e[3] === "corpo")) m[e[0]] = e[3];
+            });
+      });
+    return (kindMemo = m);
+  }
+  // muda o plano de um treino a partir de hoje
+  function setPlan(w, list) {
+    const day = Object.assign({}, isObj(state.plan[todayKey]) ? state.plan[todayKey] : {}, {
+      [w]: list.map((e) => e.slice()),
+    });
+    state.plan = Object.assign({}, state.plan, { [todayKey]: day });
+    kindMemo = null;
   }
   const keySnap = () => JSON.stringify(KEYS.map((k) => state[k]));
   const pubSnap = keySnap(); // os dados como vieram publicados, antes de juntar o que ficou no celular
@@ -5086,6 +5618,7 @@ button.pw-n {
     else if (tab === "prog") html += progHTML(s);
     else html += quadroHTML(s);
     html += sheetHTML(); // a folha do dia abre do Calendário e do aviso de dia sem marcar
+    html += exSheetHTML(); // novo exercício ou séries de um exercício
     html += `<footer class="cred">Feito por João Candaten</footer>`;
     html +=
       `<nav class="nav">` +
@@ -5231,7 +5764,7 @@ button.pw-n {
     const planned = plannedFor(parse(k)),
       noted = loadsOn(k);
     const hits = (w) =>
-      (PLANS[w] || []).filter(([n]) =>
+      (planOf(w, k) || []).filter(([n]) =>
         (GRIP[n] ? GRIP[n].map((g) => loadKey(n, g, w === LIGHT)) : [loadKey(n, null, w === LIGHT)]).some(
           (lk) => noted.includes(lk),
         ),
@@ -5320,7 +5853,7 @@ button.pw-n {
 
   function loggedLoadsToday() {
     const light = picked === LIGHT;
-    return (PLANS[picked] || []).some(
+    return (planOf(picked) || []).some(
       ([n]) =>
         isKg(n) &&
         (GRIP[n] ? GRIP[n].map((g) => loadKey(n, g, light)) : [loadKey(n, null, light)]).some(
@@ -5362,7 +5895,7 @@ button.pw-n {
     const tDow = today.getDay();
     const isOpt = !SPLIT[tDow] && !!OPTIONAL[tDow];
     const wname = doneToday || picked;
-    const list = PLANS[wname];
+    const list = planOf(wname);
     const nx = nextWorkout();
     const dis = saving ? "disabled" : "";
     const chipsOpen = showChips || (!SPLIT[tDow] && !isOpt);
@@ -5377,7 +5910,7 @@ button.pw-n {
           : isOpt && picked === OPTIONAL[tDow]
             ? "Sábado, treino leve (opcional)"
             : "Treino extra";
-        html += `<div class="plan"><div class="k">${k}</div><div class="w">${esc(picked)}</div>${list ? `<div class="ex">${list.length} exercícios</div>` : ""}</div>`;
+        html += `<div class="plan"><div class="k">${k}</div><div class="w">${esc(picked)}</div>${list ? `<div class="ex">${list.length ? `${list.length} ${sOf(list.length, "exercício", "exercícios")}` : "Nenhum exercício no plano ainda"}</div>` : ""}</div>`;
       } else {
         html += `<div class="plan"><div class="k">Fim de semana</div><div class="w wlock">${LOCK}Descanso</div><div class="ex">${esc(cap(nx.lbl))}: ${esc(nx.w)}.</div></div>`;
       }
@@ -5395,8 +5928,12 @@ button.pw-n {
             ? "Terminei o treino"
             : "Marcar treino como feito";
       html += `<button class="go" data-act="mark" ${dis}>${lbl}</button>`;
-      if (SPLIT[tDow] || isOpt)
-        html += `<button class="lnk swapl" data-act="swap">${chipsOpen ? "Fechar" : "Fiz outro treino hoje"}</button>`;
+      const editL =
+        list && dayOfWorkout(picked) !== null
+          ? `<button class="lnk" data-act="plan-edit" data-w="${esc(picked)}">Editar exercícios</button>`
+          : "";
+      if (SPLIT[tDow] || isOpt || editL)
+        html += `<div class="ck-a">${SPLIT[tDow] || isOpt ? `<button class="lnk swapl" data-act="swap">${chipsOpen ? "Fechar" : "Fiz outro treino hoje"}</button>` : ""}${editL}</div>`;
       if (chipsOpen)
         html +=
           `<div class="chips">` +
@@ -5531,12 +6068,12 @@ button.pw-n {
     return a.kg === b.kg && b.kg === c.kg ? c.kg : null;
   }
   function sessionHTML(name) {
-    const list = PLANS[name];
+    const list = planOf(name);
     if (!list) return "";
     const light = name === LIGHT;
     let h = `<ol class="exl" aria-label="Exercícios de ${esc(name)}">`;
     list.forEach(([n, sp, g]) => {
-      const unit = NOLOAD.test(n) ? null : unitOf(n);
+      const unit = isBody(n) ? null : unitOf(n);
       const grip = gripFor(n, todayKey),
         lk = loadKey(n, grip, light);
       const last = unit ? lastLoad(lk, todayKey) : null;
@@ -5610,7 +6147,7 @@ button.pw-n {
     commitKgDrafts();
     if (!state.logs[todayKey]) {
       // os pesos que estão na tela entram no registro do dia
-      (PLANS[picked] || []).forEach(([n]) => {
+      (planOf(picked) || []).forEach(([n]) => {
         if (!isKg(n)) return;
         const lk = loadKey(n, gripFor(n, todayKey), picked === LIGHT),
           h = state.loads[lk] || {};
@@ -5629,7 +6166,7 @@ button.pw-n {
   function loadUps(day, workout) {
     const light = workout === LIGHT,
       out = [];
-    (PLANS[workout] || []).forEach(([n]) => {
+    (planOf(workout, day) || []).forEach(([n]) => {
       if (!isKg(n)) return;
       const lk = loadKey(n, gripFor(n, day), light),
         cur = (state.loads[lk] || {})[day],
@@ -5642,7 +6179,7 @@ button.pw-n {
   // (foi o "Terminei" que copiou). Peso que você mudou fica.
   function dropRepeatedLoads(day, workout) {
     const light = workout === LIGHT;
-    (PLANS[workout] || []).forEach(([n]) => {
+    (planOf(workout, day) || []).forEach(([n]) => {
       if (!isKg(n)) return;
       (GRIP[n] ? GRIP[n].map((g) => loadKey(n, g, light)) : [loadKey(n, null, light)]).forEach((lk) => {
         const h = state.loads[lk];
@@ -5662,7 +6199,7 @@ button.pw-n {
     const o = {};
     MUSCLES.forEach((m) => (o[m] = 0));
     for (let w = 1; w <= 5; w++)
-      (PLANS[SPLIT[w]] || []).forEach(([n, sp, g]) => {
+      (planOf(SPLIT[w]) || []).forEach(([, sp, g]) => {
         o[muscleOf(g)] += setsOf(sp);
       });
     return o;
@@ -5673,7 +6210,7 @@ button.pw-n {
     for (let i = 0; i < 7; i++) {
       const d = new Date(mon);
       d.setDate(mon.getDate() + i);
-      (PLANS[state.logs[key(d)]] || []).forEach(([n, sp, g]) => {
+      (planOf(state.logs[key(d)], key(d)) || []).forEach(([, sp, g]) => {
         o[muscleOf(g)] += setsOf(sp);
       });
     }
@@ -5684,7 +6221,7 @@ button.pw-n {
       plan = plannedWeekSets();
     const any = MUSCLES.some((m) => done[m] > 0);
     let h = `<h2>Séries por músculo na semana</h2><section class="vol">`;
-    MUSCLES.forEach((m) => {
+    MUSCLES.filter((m) => plan[m] || done[m]).forEach((m) => {
       const p = plan[m] || 0,
         v = done[m],
         pct = p ? Math.min(100, (v / p) * 100) : v ? 100 : 0;
@@ -5912,67 +6449,458 @@ button.pw-n {
 
   // ---------- aba Pesos ----------
   // Cada treino abre a lista dos exercícios com o peso que você usa hoje. Mudou o peso? Anota aqui ou no treino.
+  // "Editar exercícios" vira a lista do treino pra montar: subir e descer, mudar séries e repetições e excluir
+  // (com desfazer). "Novo exercício" cria um exercício (ou pega um que já existe) e põe nos dias escolhidos.
+  // os treinos da semana, na ordem dos dias: de segunda a sexta e o leve de sábado
+  const weekWorkouts = () => [1, 2, 3, 4, 5, 6].map((d) => SPLIT[d] || OPTIONAL[d]).filter(Boolean);
+  function dayOfWorkout(w) {
+    for (let d = 1; d <= 6; d++) if ((SPLIT[d] || OPTIONAL[d]) === w) return d;
+    return null;
+  }
+  const dayName = (w) => (dayOfWorkout(w) === null ? "" : WDFULL[dayOfWorkout(w)]); // "Segunda"
+  const dayLabel = (w) =>
+    dayName(w) + (dayOfWorkout(w) !== null && !SPLIT[dayOfWorkout(w)] ? " (opcional)" : "");
   function pesoRows(w) {
-    const rows = [];
-    (PLANS[w] || []).forEach(([n]) => {
+    const rows = [],
+      light = w === LIGHT;
+    (planOf(w) || []).forEach(([n]) => {
       if (!isKg(n)) return;
-      (GRIP[n] ? GRIP[n].map((g) => loadKey(n, g)) : [n]).forEach((k) => {
+      (GRIP[n] ? GRIP[n].map((g) => loadKey(n, g, light)) : [loadKey(n, null, light)]).forEach((k) => {
         if (!rows.includes(k)) rows.push(k);
       });
     });
     return rows;
   }
+  let planEdit = null, // treino aberto pra montar, na aba Pesos
+    justAdded = null; // o exercício que acabou de entrar: fica marcado na lista por um instante
+  const SVG_A = `viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
+  const ICON_UP = `<svg ${SVG_A} stroke-width="2.4"><path d="M6 15l6-6 6 6"/></svg>`;
+  const ICON_DOWN = `<svg ${SVG_A} stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>`;
+  const ICON_DEL = `<svg ${SVG_A} stroke-width="2"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>`;
+  const ICON_EDIT = `<svg ${SVG_A} stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>`;
+  const ICON_PLUS = `<svg ${SVG_A} stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>`;
+  // "3x10, peito" (e "peso do corpo" quando não tem peso pra anotar)
+  const exLine = (n, sp, g) => `${sp}, ${muscleOf(g).toLowerCase()}${isBody(n) ? ", peso do corpo" : ""}`;
+  function planEditHTML(w) {
+    const list = planOf(w) || [],
+      last = list.length - 1,
+      wq = esc(w);
+    const rows = list
+      .map(([n, sp, g], i) => {
+        const nq = esc(n);
+        return `<li${justAdded === n ? ' class="new"' : ""}><div class="pe-mv"><button data-exmove="-1" data-w="${wq}" data-i="${i}" aria-label="Subir ${nq}" ${i ? "" : "disabled"}>${ICON_UP}</button><button data-exmove="1" data-w="${wq}" data-i="${i}" aria-label="Descer ${nq}" ${i < last ? "" : "disabled"}>${ICON_DOWN}</button></div><button class="pe-x" data-exedit="${i}" data-w="${wq}" aria-label="Mudar séries e repetições de ${nq}"><b>${nq}</b><span>${esc(exLine(n, sp, g))}${ICON_EDIT}</span></button><button class="pe-del" data-exdel="${i}" data-w="${wq}" aria-label="Excluir ${nq} do treino">${ICON_DEL}</button></li>`;
+      })
+      .join("");
+    return `<div class="pe"><p class="pe-n">As mudanças valem a partir de hoje. Os treinos que já passaram ficam como foram feitos.</p>${
+      list.length
+        ? `<ol class="pe-l">${rows}</ol>`
+        : `<p class="pe-e">Nenhum exercício neste treino ainda.</p>`
+    }<div class="pe-a"><button class="pe-add" data-act="ex-new" data-w="${wq}">${ICON_PLUS}Adicionar exercício</button><button class="pe-ok" data-act="plan-done" data-w="${wq}">Pronto</button></div></div>`;
+  }
   function pesosHTML() {
-    const order = [1, 2, 3, 4, 5].map((w) => SPLIT[w]);
+    const order = weekWorkouts();
     const nx = nextWorkout().w;
     const open =
       ldOpen !== null
         ? ldOpen
         : order.includes(state.logs[todayKey])
           ? state.logs[todayKey]
-          : SPLIT[today.getDay()] || (order.includes(nx) ? nx : order[0]);
-    let h = `<h2 class="first">Pesos por treino</h2><p class="qsub">Anota o peso de cada exercício. O treino do dia puxa daqui. Toca no nome pra ver a evolução.</p>`;
-    order.forEach((w, i) => {
+          : SPLIT[today.getDay()] || OPTIONAL[today.getDay()] || (order.includes(nx) ? nx : order[0]);
+    let h = `<h2 class="first">Pesos por treino</h2><p class="qsub">Anota o peso de cada exercício. O treino do dia puxa daqui. Toca no nome pra ver a evolução.</p><button class="pe-new" data-act="ex-new">${ICON_PLUS}Novo exercício</button>`;
+    order.forEach((w) => {
       const rows = pesoRows(w),
-        isOpen = w === open;
-      const bases = [...new Set((PLANS[w] || []).map((e) => e[0]).filter(isKg))];
+        isOpen = w === open,
+        editing = isOpen && planEdit === w,
+        light = w === LIGHT,
+        plan = planOf(w) || [];
+      const bases = [...new Set(plan.map((e) => e[0]).filter(isKg))];
       const filled = bases.filter((n) =>
-        (GRIP[n] ? GRIP[n].map((g) => loadKey(n, g)) : [n]).some((k) => loadHist(k).length),
+        (GRIP[n] ? GRIP[n].map((g) => loadKey(n, g, light)) : [loadKey(n, null, light)]).some(
+          (k) => loadHist(k).length,
+        ),
       ).length;
-      h += `<section class="pw ${isOpen ? "open" : ""}"><button class="pw-h" data-pw="${esc(w)}" aria-expanded="${isOpen}"><span><b>${esc(w)}</b><em>${WDFULL[i + 1]}, ${filled} de ${bases.length} com peso</em></span></button>`;
-      if (isOpen) {
-        h +=
-          `<ul class="pw-l">` +
-          rows
-            .map((k) => {
-              const hs = loadHist(k),
-                last = hs.length ? hs[hs.length - 1] : null;
-              const val = kgDraft[k] !== undefined ? kgDraft[k] : last ? fmtKg(last.kg) : "";
-              let sub = "";
-              if (hs.length > 1) {
-                const first = hs[0],
-                  pr = Math.max(...hs.map((x) => x.kg));
-                if (last.kg > first.kg) sub = `+${fmtKg(last.kg - first.kg)} kg desde ${fmtD(first.d)}`;
-                if (pr > last.kg) sub += `${sub ? ". " : ""}Recorde: ${fmtKg(pr)} kg`;
-              } else if (last) sub = `Anotado em ${fmtD(last.d)}`;
-              const open = chartOpen === k && hs.length > 0;
-              const label = `<b>${esc(k)}${hs.length ? CHART_ICON : ""}</b>${sub ? `<span>${esc(sub)}</span>` : ""}`;
-              const head = hs.length
-                ? `<button class="pw-n" data-chart="${esc(k)}" aria-expanded="${open}" aria-label="${open ? "Esconder" : "Ver"} a evolução de ${esc(k)}">${label}</button>`
-                : `<div class="pw-n">${label}</div>`;
-              const body = !open
-                ? ""
-                : hs.length > 1
-                  ? lineChartHTML("pw:" + k, hs, "kg", k)
-                  : `<p class="lc-one">Só um registro até agora: ${fmtUnit(last.kg)} em ${fmtD(last.d)}. Anota de novo no próximo treino pra ver a evolução.</p>`;
-              return `<li class="${open ? "open" : ""}"><div class="pw-r">${head}<label class="kg"><input data-kg="${esc(k)}" type="text" inputmode="decimal" autocomplete="off" value="${esc(val)}" aria-label="Peso em kg, ${esc(k)}"><span>kg</span></label></div>${body}</li>`;
-            })
-            .join("") +
-          `</ul>`;
+      const sub = editing
+        ? `${plan.length} ${sOf(plan.length, "exercício", "exercícios")}`
+        : `${filled} de ${bases.length} com peso`;
+      h += `<section class="pw ${isOpen ? "open" : ""} ${editing ? "editing" : ""}" data-pww="${esc(w)}"><button class="pw-h" data-pw="${esc(w)}" aria-expanded="${isOpen}"><span><b>${esc(w)}</b><em>${dayLabel(w)}, ${sub}</em></span></button>`;
+      if (editing) h += planEditHTML(w);
+      else if (isOpen) {
+        h += rows.length
+          ? `<ul class="pw-l">` +
+            rows
+              .map((k) => {
+                const hs = loadHist(k),
+                  last = hs.length ? hs[hs.length - 1] : null;
+                const val = kgDraft[k] !== undefined ? kgDraft[k] : last ? fmtKg(last.kg) : "";
+                let sub = "";
+                if (hs.length > 1) {
+                  const first = hs[0],
+                    pr = Math.max(...hs.map((x) => x.kg));
+                  if (last.kg > first.kg) sub = `+${fmtKg(last.kg - first.kg)} kg desde ${fmtD(first.d)}`;
+                  if (pr > last.kg) sub += `${sub ? ". " : ""}Recorde: ${fmtKg(pr)} kg`;
+                } else if (last) sub = `Anotado em ${fmtD(last.d)}`;
+                const open = chartOpen === k && hs.length > 0;
+                const label = `<b>${esc(k)}${hs.length ? CHART_ICON : ""}</b>${sub ? `<span>${esc(sub)}</span>` : ""}`;
+                const head = hs.length
+                  ? `<button class="pw-n" data-chart="${esc(k)}" aria-expanded="${open}" aria-label="${open ? "Esconder" : "Ver"} a evolução de ${esc(k)}">${label}</button>`
+                  : `<div class="pw-n">${label}</div>`;
+                const body = !open
+                  ? ""
+                  : hs.length > 1
+                    ? lineChartHTML("pw:" + k, hs, "kg", k)
+                    : `<p class="lc-one">Só um registro até agora: ${fmtUnit(last.kg)} em ${fmtD(last.d)}. Anota de novo no próximo treino pra ver a evolução.</p>`;
+                return `<li class="${open ? "open" : ""}"><div class="pw-r">${head}<label class="kg"><input data-kg="${esc(k)}" type="text" inputmode="decimal" autocomplete="off" value="${esc(val)}" aria-label="Peso em kg, ${esc(k)}"><span>kg</span></label></div>${body}</li>`;
+              })
+              .join("") +
+            `</ul>`
+          : `<p class="pe-e">Nenhum exercício com peso neste treino.</p>`;
+        h += `<button class="pe-go" data-act="plan-edit" data-w="${esc(w)}">${ICON_EDIT}Editar exercícios</button>`;
       }
       h += `</section>`;
     });
     return h;
+  }
+
+  // ---------- folha de exercício: criar um novo ou mudar séries e repetições ----------
+  let exSheet = null;
+  const normTxt = (v) =>
+    String(v)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
+  // os exercícios que o app conhece: os do plano de sempre, os de planos antigos e os criados aqui
+  function exCatalog() {
+    const out = {};
+    const add = (e) => (out[e[0]] = { n: e[0], sp: e[1], g: e[2] });
+    Object.values(PLANS).forEach((l) => l.forEach(add));
+    Object.keys(LEGACY).forEach((n) => add([n, "3x10", LEGACY[n]]));
+    Object.keys(state.plan)
+      .sort()
+      .forEach((d) => {
+        const day = state.plan[d];
+        if (isObj(day)) for (const w in day) if (Array.isArray(day[w])) day[w].filter(validEx).forEach(add);
+      });
+    return Object.values(out);
+  }
+  const findEx = (name) => {
+    const t = normTxt(name);
+    return t ? exCatalog().find((x) => normTxt(x.n) === t) || null : null;
+  };
+  // "3x12" -> 3 séries de 12; "3x30s" -> 3 séries de 30 segundos
+  function specParts(sp) {
+    const [a, b = ""] = String(sp).split("x");
+    return { sets: parseInt(a, 10) || 3, reps: parseInt(b, 10) || 10, secs: /s\s*$/.test(b) };
+  }
+  const specOf = (x) => `${x.sets}x${x.reps}${x.secs ? "s" : ""}`;
+  const XS_LIM = { sets: [1, 8, 1], reps: [1, 50, 1], secs: [5, 300, 5] }; // mínimo, máximo, passo
+  function openExNew(w) {
+    const t = state.logs[todayKey] || SPLIT[today.getDay()] || OPTIONAL[today.getDay()];
+    const pre = w || (dayOfWorkout(t) !== null ? t : null);
+    exSheet = {
+      mode: "add",
+      from: w || null,
+      name: "",
+      days: pre ? [pre] : [],
+      sets: 3,
+      reps: 12,
+      secs: false,
+      kind: "kg",
+      g: "",
+      known: null,
+      err: "",
+      shown: false,
+    };
+    render();
+    const el = document.getElementById("xs-name");
+    if (el) el.focus({ preventScroll: true });
+  }
+  function openExEdit(w, i) {
+    const e = (planOf(w) || [])[i];
+    if (!e) return;
+    exSheet = Object.assign(
+      {
+        mode: "edit",
+        w,
+        i,
+        name: e[0],
+        days: [w],
+        kind: exKind(e[0]),
+        g: e[2],
+        known: null,
+        err: "",
+        shown: false,
+      },
+      specParts(e[1]),
+    );
+    render();
+    const el = document.querySelector('.xs [data-xs="sets"][data-d="1"]');
+    if (el) el.focus({ preventScroll: true });
+  }
+  const wSel = (w) => (window.CSS ? window.CSS.escape(w) : w);
+  function focusSel(sel) {
+    const el = sel && document.querySelector(sel);
+    if (el) el.focus({ preventScroll: true });
+  }
+  function closeExSheet() {
+    const back = exSheet && exSheet.back;
+    exSheet = null;
+    render();
+    focusSel(back);
+  }
+  function xsMatches() {
+    const t = normTxt(exSheet.name);
+    if (t.length < 2) return [];
+    return exCatalog()
+      .filter((x) => normTxt(x.n).includes(t) && normTxt(x.n) !== t)
+      .slice(0, 4);
+  }
+  const xsSugHTML = () =>
+    xsMatches()
+      .map(
+        (x) =>
+          `<button class="xs-s" data-xssug="${esc(x.n)}"><b>${esc(x.n)}</b><span>${esc(exLine(x.n, x.sp, x.g))}</span></button>`,
+      )
+      .join("");
+  function xsHint() {
+    const k = exSheet.known;
+    if (!k) return "";
+    const ins = weekWorkouts().filter((w) => (planOf(w) || []).some((e) => e[0] === k.n));
+    return `Esse já existe${ins.length ? `: está no treino de ${joinPt(ins.map((w) => dayName(w).toLowerCase()))}` : ""}. Os pesos que tu anotou nele continuam valendo.`;
+  }
+  const stepLabel = (k, d) =>
+    k === "sets"
+      ? d < 0
+        ? "Menos uma série"
+        : "Mais uma série"
+      : exSheet.secs
+        ? d < 0
+          ? "Menos 5 segundos"
+          : "Mais 5 segundos"
+        : d < 0
+          ? "Menos uma repetição"
+          : "Mais uma repetição";
+  const stepHTML = (k, v, lab) =>
+    `<div class="stp" role="group" aria-labelledby="${lab}"><button data-xs="${k}" data-d="-1" aria-label="${stepLabel(k, -1)}">−</button><output id="xs-${k}" aria-live="polite">${v}</output><button data-xs="${k}" data-d="1" aria-label="${stepLabel(k, 1)}">+</button></div>`;
+  function exSheetHTML() {
+    const x = exSheet;
+    if (!x) return "";
+    const add = x.mode === "add",
+      still = x.shown ? " still" : "";
+    x.shown = true;
+    const chip = (attr, val, label, on) =>
+      `<button class="chip" ${attr}="${esc(val)}" aria-pressed="${on}" ${x.known ? "disabled" : ""}>${label}</button>`;
+    let body = "";
+    if (add)
+      body += `<label class="xf"><span class="xf-l">Nome</span><input id="xs-name" type="text" maxlength="40" autocomplete="off" autocapitalize="sentences" enterkeyhint="done" placeholder="Ex.: Leg press" value="${esc(x.name)}"></label>
+        <div class="xs-sug" id="xs-sug">${xsSugHTML()}</div><p class="xs-hint" id="xs-hint">${esc(xsHint())}</p>
+        <div class="xf"><span class="xf-l" id="xs-dl">Dias</span><div class="xs-days" role="group" aria-labelledby="xs-dl">${weekWorkouts()
+          .map(
+            (w) =>
+              `<button class="xs-day" data-xsday="${esc(w)}" aria-pressed="${x.days.includes(w)}"><b>${esc(dayLabel(w))}</b><span>${esc(w)}</span></button>`,
+          )
+          .join("")}</div></div>`;
+    body += `<div class="xs-row"><div class="xf"><span class="xf-l" id="xs-sl">Séries</span>${stepHTML("sets", x.sets, "xs-sl")}</div>
+      <div class="xf"><span class="xf-l" id="xs-rl">${x.secs ? "Segundos" : "Repetições"}</span>${stepHTML("reps", x.reps, "xs-rl")}
+      <div class="xs-unit" role="group" aria-label="Contar em"><button data-xsunit="reps" aria-pressed="${!x.secs}">repetições</button><button data-xsunit="s" aria-pressed="${x.secs}">segundos</button></div></div></div>`;
+    if (add)
+      body += `<div class="xf"><span class="xf-l" id="xs-kl">Tipo</span><div class="chips xs-ch" role="group" aria-labelledby="xs-kl">${chip("data-xskind", "kg", "Com peso", x.kind === "kg")}${chip("data-xskind", "corpo", "Peso do corpo", x.kind === "corpo")}</div></div>
+        <div class="xf"><span class="xf-l" id="xs-gl">Músculo</span><div class="chips xs-ch" role="group" aria-labelledby="xs-gl">${MUSCLES.map((m) => chip("data-xsg", m, m, muscleOf(x.g) === m)).join("")}</div></div>`;
+    const title = add ? "Novo exercício" : esc(x.name),
+      sub = add
+        ? "Cria um exercício ou escolhe um que já existe, e marca os dias em que ele entra."
+        : `${esc(x.w)}, ${esc(dayLabel(x.w).toLowerCase())}`;
+    return `<div class="sheet-bg" data-act="xs-close"></div><div class="sheet xs${still}" role="dialog" aria-modal="true" aria-labelledby="xs-t">
+      <div class="sh-grab"></div><div class="sh-h"><b id="xs-t">${title}</b><span>${sub}</span></div>${body}
+      <p class="ferr xs-err" id="xs-err" role="alert">${esc(x.err)}</p>
+      <button class="go" data-act="xs-save">${add ? "Adicionar" : "Salvar"}</button>${add ? "" : `<button class="pe-rm" data-act="xs-del">${ICON_DEL}Excluir do treino</button>`}
+      <button class="sh-x" data-act="xs-close">Cancelar</button></div>`;
+  }
+  // atualiza a folha aberta sem redesenhar a tela (o teclado e o foco ficam onde estão)
+  function xsSync() {
+    const x = exSheet,
+      el = document.querySelector(".sheet.xs");
+    if (!x || !el) return;
+    const q = (sel) => el.querySelector(sel);
+    if (q("#xs-sug")) q("#xs-sug").innerHTML = xsSugHTML();
+    if (q("#xs-hint")) q("#xs-hint").textContent = xsHint();
+    el.querySelectorAll("[data-xsday]").forEach((b) =>
+      b.setAttribute("aria-pressed", String(x.days.includes(b.dataset.xsday))),
+    );
+    el.querySelectorAll("[data-xskind]").forEach((b) => {
+      b.setAttribute("aria-pressed", String(x.kind === b.dataset.xskind));
+      b.disabled = !!x.known;
+    });
+    el.querySelectorAll("[data-xsg]").forEach((b) => {
+      b.setAttribute("aria-pressed", String(!!x.g && muscleOf(x.g) === b.dataset.xsg));
+      b.disabled = !!x.known;
+    });
+    q("#xs-sets").textContent = x.sets;
+    q("#xs-reps").textContent = x.reps;
+    q("#xs-rl").textContent = x.secs ? "Segundos" : "Repetições";
+    el.querySelectorAll("[data-xs]").forEach((b) =>
+      b.setAttribute("aria-label", stepLabel(b.dataset.xs, +b.dataset.d)),
+    );
+    el.querySelectorAll("[data-xsunit]").forEach((b) =>
+      b.setAttribute("aria-pressed", String((b.dataset.xsunit === "s") === x.secs)),
+    );
+    q("#xs-err").textContent = x.err;
+  }
+  // nome digitado: se for um exercício que já existe, o tipo e o músculo vêm dele
+  function xsName(v) {
+    const x = exSheet;
+    x.name = v;
+    x.err = "";
+    x.known = findEx(v);
+    if (x.known) {
+      x.kind = exKind(x.known.n);
+      x.g = x.known.g;
+    }
+    xsSync();
+  }
+  function xsPick(n) {
+    const k = exCatalog().find((e) => e.n === n);
+    if (!k) return;
+    Object.assign(exSheet, specParts(k.sp), { name: k.n, known: k, kind: exKind(k.n), g: k.g, err: "" });
+    const el = document.getElementById("xs-name");
+    if (el) el.value = k.n;
+    xsSync();
+  }
+  function xsStep(k, d) {
+    const x = exSheet,
+      [lo, hi, step] = k === "sets" ? XS_LIM.sets : x.secs ? XS_LIM.secs : XS_LIM.reps;
+    x[k] = Math.max(lo, Math.min(hi, x[k] + d * step));
+    xsSync();
+  }
+  function xsUnit(secs) {
+    const x = exSheet;
+    if (x.secs === secs) return;
+    x.secs = secs;
+    x.reps = secs ? 30 : 12;
+    xsSync();
+  }
+  function xsErr(msg) {
+    exSheet.err = msg;
+    xsSync();
+    const e = document.getElementById("xs-err");
+    if (e) e.scrollIntoView({ block: "nearest" });
+  }
+  const dayList = (ws) => joinPt(ws.map((w) => dayName(w).toLowerCase()));
+  // toda mudança no plano: guarda no celular, publica depois de uma pausa e oferece desfazer
+  function planChange(fn, msg) {
+    const prev = isObj(state.plan[todayKey]) ? JSON.parse(JSON.stringify(state.plan[todayKey])) : undefined;
+    fn();
+    softSave(30000);
+    snack(msg, () => {
+      const p = Object.assign({}, state.plan);
+      if (prev === undefined) delete p[todayKey];
+      else p[todayKey] = prev;
+      state.plan = p;
+      kindMemo = null;
+      softSave(30000);
+    });
+  }
+  function xsSave() {
+    const x = exSheet;
+    if (x.mode === "edit") {
+      const list = (planOf(x.w) || []).slice(),
+        e = list[x.i];
+      if (!e) return closeExSheet();
+      const sp = specOf(x);
+      exSheet = null;
+      if (sp === e[1]) {
+        render();
+        return focusSel(x.back);
+      }
+      planChange(() => {
+        list[x.i] = [e[0], sp, e[2]].concat(e[3] ? [e[3]] : []);
+        setPlan(x.w, list);
+      }, `${e[0]}: agora ${sp}.`);
+      focusSel(x.back);
+      return;
+    }
+    const typed = x.name.trim().replace(/\s+/g, " ");
+    if (!typed) return xsErr("Escreve o nome do exercício.");
+    const k = findEx(typed),
+      name = k ? k.n : typed.charAt(0).toUpperCase() + typed.slice(1);
+    if (!k && !x.g) return xsErr("Escolhe o músculo que ele trabalha.");
+    if (!x.days.length) return xsErr("Escolhe pelo menos um dia.");
+    const kind = k ? customKinds()[k.n] : x.kind,
+      entry = [name, specOf(x), k ? k.g : x.g].concat(kind ? [kind] : []);
+    const had = x.days.filter((w) => (planOf(w) || []).some((e) => e[0] === name)),
+      to = weekWorkouts().filter((w) => x.days.includes(w) && !had.includes(w));
+    if (!to.length)
+      return xsErr(
+        `${name} já está ${had.length > 1 ? "nesses treinos" : `no treino de ${dayName(had[0]).toLowerCase()}`}.`,
+      );
+    exSheet = null;
+    // abre o treino montando, com o exercício novo no fim da lista
+    planEdit = ldOpen = x.from && to.includes(x.from) ? x.from : to[0];
+    justAdded = name;
+    if (tab !== "pesos") tab = "pesos";
+    planChange(
+      () => to.forEach((w) => setPlan(w, (planOf(w) || []).concat([entry]))),
+      `${name} entrou ${to.length > 1 ? "nos treinos" : "no treino"} de ${dayList(to)}.${had.length ? ` Já estava no de ${dayList(had)}.` : ""}`,
+    );
+    showAdded();
+  }
+  // o fim da lista do treino aberto, onde entrou o exercício novo
+  function showAdded() {
+    const li = document.querySelector(".pe-l li.new");
+    justAdded = null;
+    if (!li) return;
+    li.scrollIntoView({ block: "center", behavior: calm() ? "auto" : "smooth" });
+    li.querySelector(".pe-x").focus({ preventScroll: true });
+  }
+  function exDelete(w, i) {
+    const list = (planOf(w) || []).slice(),
+      e = list[i];
+    if (!e) return;
+    planChange(
+      () => {
+        list.splice(i, 1);
+        setPlan(w, list);
+      },
+      `${e[0]} saiu do treino de ${dayName(w).toLowerCase()}.`,
+    );
+    focusSel(
+      list.length
+        ? `.pe-del[data-w="${wSel(w)}"][data-exdel="${Math.min(i, list.length - 1)}"]`
+        : `.pe-add[data-w="${wSel(w)}"]`,
+    );
+  }
+  function exMove(w, i, d) {
+    const list = (planOf(w) || []).slice(),
+      j = i + d;
+    if (j < 0 || j >= list.length) return;
+    [list[i], list[j]] = [list[j], list[i]];
+    setPlan(w, list);
+    softSave(30000);
+    // o foco segue o exercício que andou
+    const sel = (dd) => `.pe-mv [data-exmove="${dd}"][data-i="${j}"]`,
+      b = document.querySelector(sel(d));
+    (b && !b.disabled ? b : document.querySelector(sel(-d)) || document.body).focus({ preventScroll: true });
+  }
+
+  // aviso embaixo, com desfazer
+  let snackT = null,
+    snackUndo = null;
+  function snack(msg, undo) {
+    document.querySelectorAll(".snack").forEach((e) => e.remove());
+    clearTimeout(snackT);
+    snackUndo = undo || null;
+    const el = document.createElement("div");
+    el.className = "snack";
+    el.setAttribute("role", "status");
+    el.innerHTML = `<span>${esc(msg)}</span>${undo ? `<button data-act="snack-undo">Desfazer</button>` : ""}`;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.classList.add("in"));
+    snackT = setTimeout(() => {
+      snackUndo = null;
+      el.classList.remove("in");
+      setTimeout(() => el.remove(), 300);
+    }, 6000);
   }
 
   // ---------- folha do dia (Calendário e aviso de dia sem marcar) ----------
@@ -6353,7 +7281,7 @@ button.pw-n {
   // peso levantado num dia: o mesmo cálculo das retrospectivas (near e grip: versões rápidas pra muitos dias)
   function dayKg(k, near, grip) {
     const w = state.logs[k],
-      plan = PLANS[w];
+      plan = planOf(w, k);
     if (!plan) return 0;
     near = near || loadNear;
     grip = grip || gripFor;
@@ -6963,7 +7891,7 @@ button.pw-n {
   };
   const repsOf = (spec) => parseInt(String(spec).split("x")[1], 10) || 10;
   const wdName = (i) => WDFULL[(i + 1) % 7]; // 0 = segunda
-  const planSets = (w) => (PLANS[w] || []).reduce((a, e) => a + setsOf(e[1]), 0);
+  const planSets = (w) => (planOf(w) || []).reduce((a, e) => a + setsOf(e[1]), 0);
   // peso de um exercício num dia: o anotado no dia, senão o último antes, senão o primeiro depois
   function loadNear(lk, k) {
     const hs = loadHist(lk);
@@ -7042,7 +7970,7 @@ button.pw-n {
       r.types[w] = (r.types[w] || 0) + 1;
       r.wd[(d.getDay() + 6) % 7]++;
       if (typeof state.hr[k] === "number") r.hours.push(state.hr[k]);
-      const plan = PLANS[w];
+      const plan = planOf(w, k);
       if (plan) {
         plan.forEach(([, sp, g]) => {
           const s = setsOf(sp);
@@ -8816,6 +9744,8 @@ button.pw-n {
           y: window.scrollY,
           sheet: sheetDay,
           ex: exOpen,
+          pe: planEdit,
+          lo: ldOpen,
         }),
       );
     } catch (e) {}
@@ -8902,7 +9832,8 @@ button.pw-n {
 
   document.addEventListener("click", (e) => {
     if (e.target.classList && e.target.classList.contains("sheet-bg")) {
-      closeSheet();
+      if (exSheet) closeExSheet();
+      else closeSheet();
       return;
     }
     const t = e.target.closest("button");
@@ -8929,6 +9860,109 @@ button.pw-n {
     }
     if (saving) return;
     const act = t.dataset.act;
+    // ---- montar o treino: novo exercício, séries, ordem e excluir ----
+    if (exSheet && t.closest(".sheet.xs")) {
+      if (t.dataset.xsday) {
+        const w = t.dataset.xsday,
+          x = exSheet;
+        x.days = x.days.includes(w) ? x.days.filter((d) => d !== w) : x.days.concat(w);
+        x.err = "";
+        xsSync();
+        return;
+      }
+      if (t.dataset.xskind) {
+        exSheet.kind = t.dataset.xskind;
+        xsSync();
+        return;
+      }
+      if (t.dataset.xsg) {
+        exSheet.g = t.dataset.xsg;
+        exSheet.err = "";
+        xsSync();
+        return;
+      }
+      if (t.dataset.xssug) {
+        xsPick(t.dataset.xssug);
+        return;
+      }
+      if (t.dataset.xs) {
+        xsStep(t.dataset.xs, +t.dataset.d);
+        return;
+      }
+      if (t.dataset.xsunit) {
+        xsUnit(t.dataset.xsunit === "s");
+        return;
+      }
+      if (act === "xs-save") {
+        xsSave();
+        return;
+      }
+      if (act === "xs-del") {
+        const x = exSheet;
+        exSheet = null;
+        exDelete(x.w, x.i);
+        return;
+      }
+      if (act === "xs-close") {
+        closeExSheet();
+        return;
+      }
+    }
+    if (act === "ex-new") {
+      commitKgDrafts();
+      localWrite();
+      openExNew(t.dataset.w || null);
+      if (exSheet) exSheet.back = t.dataset.w ? `.pe-add[data-w="${wSel(t.dataset.w)}"]` : ".pe-new";
+      return;
+    }
+    if (act === "plan-edit") {
+      commitKgDrafts();
+      localWrite();
+      const w = t.dataset.w;
+      planEdit = ldOpen = w;
+      if (tab !== "pesos") {
+        tab = "pesos";
+        try {
+          localStorage.setItem("treinos-tab", tab);
+        } catch (e) {}
+      }
+      render();
+      const sec = document.querySelector(`.pw[data-pww="${window.CSS ? window.CSS.escape(w) : w}"]`);
+      if (sec) {
+        sec.scrollIntoView({ block: "start" });
+        const f = sec.querySelector(".pe-x");
+        if (f) f.focus({ preventScroll: true });
+      }
+      return;
+    }
+    if (act === "plan-done") {
+      const w = t.dataset.w;
+      planEdit = null;
+      render();
+      const h = document.querySelector(`.pw-h[data-pw="${window.CSS ? window.CSS.escape(w) : w}"]`);
+      if (h) h.focus({ preventScroll: true });
+      return;
+    }
+    if (t.dataset.exedit !== undefined) {
+      openExEdit(t.dataset.w, +t.dataset.exedit);
+      if (exSheet) exSheet.back = `.pe-x[data-w="${wSel(t.dataset.w)}"][data-exedit="${t.dataset.exedit}"]`;
+      return;
+    }
+    if (t.dataset.exdel !== undefined) {
+      exDelete(t.dataset.w, +t.dataset.exdel);
+      return;
+    }
+    if (t.dataset.exmove) {
+      exMove(t.dataset.w, +t.dataset.i, +t.dataset.exmove);
+      return;
+    }
+    if (act === "snack-undo") {
+      const u = snackUndo;
+      snackUndo = null;
+      document.querySelectorAll(".snack").forEach((e) => e.remove());
+      if (u) u();
+      return;
+    }
     // ---- dias que ficaram sem marcar ----
     if (act === "miss-ok") {
       const k = t.dataset.k;
@@ -8997,6 +10031,7 @@ button.pw-n {
       return;
     }
     if (t.dataset.nav) {
+      if (t.dataset.nav !== tab) planEdit = null;
       tab = t.dataset.nav;
       try {
         localStorage.setItem("treinos-tab", tab);
@@ -9064,6 +10099,7 @@ button.pw-n {
         ldOpen === t.dataset.pw || (ldOpen === null && t.getAttribute("aria-expanded") === "true")
           ? ""
           : t.dataset.pw;
+      if (planEdit && planEdit !== ldOpen) planEdit = null;
       render();
       return;
     }
@@ -9238,6 +10274,7 @@ button.pw-n {
   document.addEventListener("input", (e) => {
     const el = e.target;
     lastTyped = Date.now();
+    if (el.id === "xs-name" && exSheet) xsName(el.value);
     if (el.id === "w") weightDraft = el.value;
     if (el.id === "rkm") runKm = el.value;
     if (el.id === "rtime") runTime = el.value;
@@ -9320,11 +10357,16 @@ button.pw-n {
       return;
     }
     if (e.key === "Escape") {
-      if (sheetDay) closeSheet();
+      if (exSheet) closeExSheet();
+      else if (sheetDay) closeSheet();
       return;
     }
     if (e.key !== "Enter") return;
     const el = e.target;
+    if (el.id === "xs-name") {
+      el.blur();
+      return;
+    }
     if (el.dataset && el.dataset.kg !== undefined) {
       el.blur();
       return;
@@ -9358,6 +10400,8 @@ button.pw-n {
     lastParts = pend.parts;
     sheetDay = pend.sheet || null;
     exOpen = !!pend.ex;
+    planEdit = typeof pend.pe === "string" ? pend.pe : null;
+    if (typeof pend.lo === "string") ldOpen = pend.lo;
     render();
     window.scrollTo(0, pend.y || 0);
     savedPill();
