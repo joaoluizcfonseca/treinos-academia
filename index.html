@@ -6883,24 +6883,24 @@ button.pw-n {
     (b && !b.disabled ? b : document.querySelector(sel(-d)) || document.body).focus({ preventScroll: true });
   }
 
-  // aviso embaixo, com desfazer
+  // aviso embaixo, com um botão (Desfazer, ou o que vier em label)
   let snackT = null,
     snackUndo = null;
-  function snack(msg, undo) {
+  function snack(msg, undo, label, ms) {
     document.querySelectorAll(".snack").forEach((e) => e.remove());
     clearTimeout(snackT);
     snackUndo = undo || null;
     const el = document.createElement("div");
     el.className = "snack";
     el.setAttribute("role", "status");
-    el.innerHTML = `<span>${esc(msg)}</span>${undo ? `<button data-act="snack-undo">Desfazer</button>` : ""}`;
+    el.innerHTML = `<span>${esc(msg)}</span>${undo ? `<button data-act="snack-undo">${esc(label || "Desfazer")}</button>` : ""}`;
     document.body.appendChild(el);
     requestAnimationFrame(() => el.classList.add("in"));
     snackT = setTimeout(() => {
       snackUndo = null;
       el.classList.remove("in");
       setTimeout(() => el.remove(), 300);
-    }, 6000);
+    }, ms || 6000);
   }
 
   // ---------- folha do dia (Calendário e aviso de dia sem marcar) ----------
@@ -9382,6 +9382,58 @@ button.pw-n {
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   }
 
+  // ---------- versão nova do app (GitHub Pages) ----------
+  // Com internet, o app já abre na versão mais nova: o sw.js busca ela antes de abrir. Quando ela chega com o
+  // app aberto (internet lenta na hora de abrir, ou o app voltando do fundo depois de uma atualização), ele
+  // troca sozinho se acabou de abrir ou de voltar pra tela e ninguém mexeu ainda. Se alguém está usando,
+  // aparece um aviso com Atualizar, e a troca fica pra próxima vez que o app voltar pra tela. Quem está
+  // digitando um peso, montando um exercício ou vendo uma retrospectiva nunca é interrompido.
+  let newVersion = false,
+    calmSince = Date.now(), // abriu ou voltou pra tela; um toque depois disso é alguém mexendo
+    touchedAt = 0,
+    checkedAt = 0;
+  function updateApp() {
+    commitKgDrafts();
+    localWrite();
+    try {
+      sessionStorage.setItem("treinos-upd", JSON.stringify({ t: Date.now(), y: window.scrollY, lo: ldOpen }));
+    } catch (e) {}
+    location.reload();
+  }
+  function tryUpdate(told) {
+    if (!newVersion) return;
+    const a = document.activeElement,
+      typing = a && a.tagName === "INPUT" && Date.now() - lastTyped < 120000,
+      calm = touchedAt < calmSince && Date.now() - calmSince < 10000;
+    if (calm && !typing && !story && !exSheet && !sheetDay) updateApp();
+    else if (told) snack("Tem uma versão nova do app.", updateApp, "Atualizar", 30000);
+  }
+  if (LOCAL_APP && "serviceWorker" in navigator) {
+    const sw = navigator.serviceWorker;
+    sw.addEventListener("message", (e) => {
+      if (!e.data || e.data.type !== "app-update") return;
+      newVersion = true;
+      tryUpdate(true);
+    });
+    if (sw.startMessages) sw.startMessages();
+    const touch = () => (touchedAt = Date.now());
+    document.addEventListener("pointerdown", touch, true);
+    document.addEventListener("keydown", touch, true);
+    // confere se o site tem versão nova: quando o app volta pra tela e, aberto direto, a cada meia hora
+    const check = () => {
+      if (newVersion || !sw.controller || Date.now() - checkedAt < 60000) return;
+      checkedAt = Date.now();
+      sw.controller.postMessage("check");
+    };
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState !== "visible") return;
+      calmSince = Date.now();
+      if (newVersion) tryUpdate(false);
+      else check();
+    });
+    setInterval(() => document.visibilityState === "visible" && check(), 30 * 60000);
+  }
+
   // ---------- tema ----------
   let theme = null; // null = segue o tema do celular / de onde o app está aberto
   // visual do app, neste celular. O padrão é a Maré; "" é o original (guardado como "orig").
@@ -10415,6 +10467,19 @@ button.pw-n {
     checkSecrets(true);
     checkLevelUp(stats());
   }
+  // acabou de trocar pra versão nova do app: volta pro mesmo lugar da tela e avisa
+  try {
+    const up = JSON.parse(sessionStorage.getItem("treinos-upd") || "null");
+    sessionStorage.removeItem("treinos-upd");
+    if (up && Date.now() - up.t < 60000) {
+      if (typeof up.lo === "string" && up.lo !== ldOpen) {
+        ldOpen = up.lo;
+        render();
+      }
+      window.scrollTo(0, up.y || 0);
+      savedPill("App atualizado.");
+    }
+  } catch (e) {}
   if (window.claude && window.claude.use) {
     const noSave = () => {
       cantSave = true;

@@ -11,7 +11,7 @@
   <img alt="Projeto de uso pessoal" src="https://img.shields.io/badge/projeto-uso%20pessoal-0D3B4F?style=flat-square">
   <img alt="PWA que funciona offline" src="https://img.shields.io/badge/PWA-funciona%20offline-D97F00?style=flat-square">
   <img alt="HTML, CSS e JavaScript sem dependências" src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-sem%20depend%C3%AAncias-23949D?style=flat-square">
-  <img alt="131 testes com Playwright" src="https://img.shields.io/badge/testes-131%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
+  <img alt="135 testes com Playwright" src="https://img.shields.io/badge/testes-135%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
 </p>
 
 <p align="center">
@@ -77,12 +77,12 @@ Quatro visuais, cada um com tema claro e escuro e a própria escala de cores por
 
 ### Sem internet
 
-Instalado na tela inicial, o app abre e salva sem conexão. Os dados ficam no aparelho, com exportação e importação de backup em **Progresso → Backup**, e o app lembra de exportar um backup uma vez por semana.
+Instalado na tela inicial, o app abre e salva sem conexão e, com internet, abre sempre na versão mais nova. Os dados ficam no aparelho, com exportação e importação de backup em **Progresso → Backup**, e o app lembra de exportar um backup uma vez por semana.
 
 ## Como funciona
 
 - **Um arquivo só.** O `index.html` contém o HTML, o CSS, o JavaScript e os dados, num JSON em `<script id="state">`. Não tem build, framework nem dependências.
-- **App instalado (GitHub Pages).** Os dados ficam no `localStorage` do aparelho. O service worker (`sw.js`) guarda o app na primeira visita, abre a partir dele com ou sem sinal e baixa as atualizações em segundo plano.
+- **App instalado (GitHub Pages).** Os dados ficam no `localStorage` do aparelho. O service worker (`sw.js`) guarda o app no aparelho e, a cada abertura, busca a versão do site: com internet, o app já abre na versão mais nova; sem sinal, ou se a internet não responder em 1,5 segundo, abre na hora com a cópia guardada. Uma versão que chega com o app aberto entra sozinha quando não atrapalha (logo ao abrir ou quando o app volta para a tela); se a pessoa estiver anotando, aparece um aviso com **Atualizar**.
 - **No claude.ai.** O app publica uma nova versão de si mesmo a cada alteração, com os dados embutidos. Se a publicação falhar, nada trava: o que foi anotado fica no aparelho e é enviado no próximo toque.
 - **Sem perda de dados.** Anotações feitas sobre uma versão antiga são mescladas na nova, e se o dia virar com o app aberto, ele espera terminar a digitação antes de atualizar a tela.
 
@@ -109,7 +109,7 @@ Instalado na tela inicial, o app abre e salva sem conexão. Os dados ficam no ap
 .
 ├── index.html             o app inteiro: HTML, CSS, JavaScript e dados
 ├── manifest.webmanifest   instalação na tela inicial (nome, ícone e cores)
-├── sw.js                  service worker: funcionamento sem internet
+├── sw.js                  service worker: sem internet e sempre na versão mais nova
 ├── icons/                 ícones do app
 ├── fonts/                 fontes do app (SIL Open Font License 1.1)
 ├── docs/                  imagens deste README
@@ -129,7 +129,7 @@ No computador, basta abrir o `index.html` no navegador.
 
 ## Testes
 
-São 131 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
+São 135 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
 
 ```bash
 pip install -r requirements-dev.txt
@@ -147,6 +147,7 @@ Eles cobrem:
 - **Visuais:** os quatro, nos dois temas, em telas a partir de 320 px, com contraste legível sobre a cor do nível.
 - **Salvamento:** versões novas, conflitos, falhas de publicação e telas que não conseguem salvar, sem nunca travar os campos.
 - **Sem internet:** abrir e salvar com o servidor desligado, fontes incluídas, backup de ida e volta e o lembrete semanal de backup.
+- **Atualizações:** a versão nova já na primeira abertura, internet lenta, o app voltando do fundo, quem está digitando sem ser interrompido e o celular que ainda tinha o service worker antigo.
 
 ## Licença
 
