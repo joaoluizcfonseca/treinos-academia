@@ -11,7 +11,7 @@
   <img alt="Projeto de uso pessoal" src="https://img.shields.io/badge/projeto-uso%20pessoal-0D3B4F?style=flat-square">
   <img alt="PWA que funciona offline" src="https://img.shields.io/badge/PWA-funciona%20offline-D97F00?style=flat-square">
   <img alt="HTML, CSS e JavaScript sem dependências" src="https://img.shields.io/badge/HTML%20%2B%20CSS%20%2B%20JS-sem%20depend%C3%AAncias-23949D?style=flat-square">
-  <img alt="138 testes com Playwright" src="https://img.shields.io/badge/testes-138%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
+  <img alt="145 testes com Playwright" src="https://img.shields.io/badge/testes-145%20com%20Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white">
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@
 
 | Hoje | Pesos | Progresso | Calendário |
 |:---:|:---:|:---:|:---:|
-| <img src="docs/tela-hoje.png" width="200" alt="Treino do dia com os exercícios e os pesos"> | <img src="docs/tela-pesos.png" width="200" alt="Pesos de cada exercício, com o gráfico de evolução aberto"> | <img src="docs/tela-progresso.png" width="200" alt="Painel geral com os números e os gráficos semanais"> | <img src="docs/tela-calendario.png" width="200" alt="Calendário até o verão"> |
+| <img src="docs/tela-hoje.png" width="200" alt="Treino do dia com dois exercícios feitos, a barra do treino e os pesos"> | <img src="docs/tela-pesos.png" width="200" alt="Pesos de cada exercício, com o gráfico de evolução aberto"> | <img src="docs/tela-progresso.png" width="200" alt="Painel geral com os números e os gráficos semanais"> | <img src="docs/tela-calendario.png" width="200" alt="Calendário até o verão"> |
 
 <p align="center"><sub>Telas com dados de exemplo, no visual padrão (Maré).</sub></p>
 
@@ -37,7 +37,8 @@
 
 ### Treino
 
-- **Treino do dia:** um treino para cada dia, de segunda a sábado, com o peso da última vez já preenchido em cada exercício. Um toque em *Terminei o treino* registra tudo, sem marcar série por série. A meta é de 5 treinos na semana; o sábado é uma chance a mais de fechar a semana e, se ficar sem treino, não quebra a sequência.
+- **Treino do dia:** um treino para cada dia, de segunda a sábado, com o peso da última vez já preenchido em cada exercício. A meta é de 5 treinos na semana; o sábado é uma chance a mais de fechar a semana e, se ficar sem treino, não quebra a sequência.
+- **Exercício feito:** um toque marca cada exercício com um certinho animado, e a barra do treino mostra quanto falta. No fim, um toque em *Terminei o treino* registra tudo, sem marcar série por série.
 - **Pesos por exercício:** histórico, recordes e gráfico de evolução. A puxada guarda um peso para cada pegada.
 - **Montar o treino:** criar exercício novo (ou escolher um que já existe, com os pesos dele), marcar os dias em que ele entra, mudar séries e repetições, reordenar e excluir, com desfazer. A mudança vale a partir do dia em que foi feita: os treinos que já passaram continuam contando como foram.
 - **Sugestão de carga:** quando o peso de um exercício se repete três vezes seguidas, o app sugere subir.
@@ -93,7 +94,7 @@ Instalado na tela inicial, o app abre e salva sem conexão e, com internet, abre
 |---|---|
 | `logs` | dia → treino feito |
 | `runs` | dia → `{km, min}` da corrida |
-| `ex` | dia → treino escolhido e pegada da puxada |
+| `ex` | dia → treino escolhido, pegada da puxada e exercícios feitos |
 | `loads` | exercício → `{dia: valor}` em kg (no tempo pendurado, em segundos) |
 | `weight` | dia → peso corporal em kg |
 | `plan` | dia da mudança → treino → exercícios (o plano montado no app; cada dia usa o que valia nele) |
@@ -129,7 +130,7 @@ No computador, basta abrir o `index.html` no navegador.
 
 ## Testes
 
-São 138 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
+São 145 testes de ponta a ponta com [pytest](https://pytest.org) e [Playwright](https://playwright.dev/python/), que abrem o app num navegador de verdade:
 
 ```bash
 pip install -r requirements-dev.txt
@@ -140,6 +141,7 @@ pytest
 Eles cobrem:
 
 - **Treino:** do começo ao fim, com pesos, pegadas, sugestão de carga, o treino de sábado, treinos esquecidos e desmarcar sem deixar dados para trás.
+- **Exercício feito:** marcar e desmarcar (também pelo teclado), a contagem e a barra, o que fica guardado ao fechar o app, a animação só no toque (e nenhuma para quem pede menos movimento) e telas de 320 px nos quatro visuais.
 - **Cálculos:** sequência, nível, séries por músculo, painel geral e evolução das cargas.
 - **Montar o treino:** exercício novo e já existente, dias, séries, ordem, excluir com desfazer, o histórico intacto e telas pequenas.
 - **Treinos por ano:** o tom de cada dia pelo peso levantado, toque, arrasto e setas, vários anos e a mesma conta da retrospectiva.

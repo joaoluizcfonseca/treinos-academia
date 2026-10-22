@@ -764,6 +764,170 @@ main.tabin > * {
   color: var(--ink);
 }
 
+/* Hoje: marcar cada exercício como feito. A caixinha enche com a cor do nível e o certinho é desenhado;
+   no toque ela dá um pulo e solta um anel. A contagem e a barra do treino acompanham. */
+.exn {
+  flex: 1;
+}
+.exc {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -11px -12px -11px -10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--on-done);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.exc::before,
+.exc::after {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+}
+.exc::before {
+  box-shadow: inset 0 0 0 2px var(--soft);
+  transition:
+    background-color 0.18s,
+    box-shadow 0.18s;
+}
+.exc::after {
+  opacity: 0;
+  box-shadow: 0 0 0 2px var(--done);
+  pointer-events: none;
+}
+.exc svg {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+  transition: stroke-dashoffset 0.24s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.exc[aria-pressed="true"]::before {
+  background: var(--done);
+  box-shadow: inset 0 0 0 2px var(--done);
+}
+.exc[aria-pressed="true"] svg {
+  stroke-dashoffset: 0;
+  transition-delay: 0.07s;
+}
+.exc:focus-visible {
+  outline: none;
+}
+.exc:focus-visible::before {
+  outline: 2px solid var(--today);
+  outline-offset: 3px;
+}
+.exc.pop::before {
+  animation: excPop 0.4s cubic-bezier(0.2, 0.7, 0.2, 1.35);
+}
+.exc.pop::after {
+  animation: excRing 0.55s ease-out;
+}
+@keyframes excPop {
+  0% {
+    transform: scale(0.8);
+  }
+  55% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes excRing {
+  from {
+    opacity: 0.7;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.85);
+  }
+}
+.exn b {
+  transition: color 0.25s;
+}
+.exi.ok .exn b {
+  color: var(--soft);
+}
+/* celular estreito: menos espaço entre a caixinha, o nome e o peso, pra o nome caber em menos linhas */
+@media (max-width: 360px) {
+  .exh {
+    gap: 8px;
+  }
+  .exc {
+    margin-right: -8px;
+  }
+  .kg span {
+    min-width: 18px;
+  }
+}
+/* contagem do treino: um tracinho por exercício, que enche quando ele é feito */
+.plan .ex.all {
+  color: var(--done);
+  font-weight: 700;
+}
+.exp {
+  display: flex;
+  gap: 3px;
+  margin: 8px 0 0;
+}
+.exp i {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--line);
+}
+.exp i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--done);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.exp i.on::after {
+  transform: none;
+}
+/* tudo feito: um brilho passa uma vez pelo botão de terminar */
+.go {
+  position: relative;
+  overflow: hidden;
+}
+.go.shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -45%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: goShine 0.9s 0.15s ease-out both;
+  pointer-events: none;
+}
+@keyframes goShine {
+  to {
+    transform: translateX(330%);
+  }
+}
+
 /* Hoje: corrida */
 .runbtn {
   width: 100%;
@@ -4761,6 +4925,70 @@ button.pw-n {
 :root[data-skin="caderno"] .d.today {
   box-shadow: inset 0 0 0 2.5px var(--today);
 }
+/* exercício feito em cada visual: na Maré a caixinha é redonda e o anel parece uma onda; na Anilha é
+   quadrada, com o certinho mais grosso; no Caderno é o quadradinho da folha, com o certinho à caneta e o
+   nome riscado */
+:root[data-skin="mare"] .exc::before,
+:root[data-skin="mare"] .exc::after {
+  border-radius: 50%;
+}
+:root[data-skin="anilha"] .exc::before,
+:root[data-skin="anilha"] .exc::after {
+  border-radius: 4px;
+}
+:root[data-skin="anilha"] .exc::before {
+  box-shadow: inset 0 0 0 2.5px var(--soft);
+}
+:root[data-skin="anilha"] .exc svg {
+  stroke-width: 3.8;
+}
+:root[data-skin="caderno"] .exc::before,
+:root[data-skin="caderno"] .exc::after {
+  border-radius: 3px;
+}
+:root[data-skin="caderno"] .exc {
+  color: var(--done);
+}
+:root[data-skin="caderno"] .exc::before {
+  box-shadow: inset 0 0 0 1.5px var(--soft);
+  transform: rotate(-2deg);
+}
+:root[data-skin="caderno"] .exc[aria-pressed="true"]::before {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--done);
+}
+:root[data-skin="caderno"] .exc svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2.6;
+  transform: rotate(-6deg) translate(2px, -3px);
+}
+:root[data-skin="caderno"] .exn b {
+  text-decoration: line-through 2px transparent;
+  transition:
+    color 0.25s,
+    text-decoration-color 0.3s;
+}
+:root[data-skin="caderno"] .exi.ok .exn b {
+  text-decoration-color: var(--done);
+}
+:root[data-skin="caderno"] .exp i {
+  height: 6px;
+  border-radius: 1px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--soft);
+}
+:root[data-skin="caderno"] .exp i::after {
+  background: repeating-linear-gradient(-45deg, var(--done) 0 2px, transparent 2px 4px);
+}
+:root[data-skin="anilha"] .exp i {
+  height: 6px;
+  border-radius: 1px;
+}
+:root[data-skin="mare"] .exp i {
+  height: 5px;
+  border-radius: 3px;
+}
 /* montar o treino em cada visual */
 :root[data-skin="mare"] :is(.xs-day, .xs-s) {
   border-radius: 14px;
@@ -5043,6 +5271,11 @@ button.pw-n {
     stroke-dashoffset: 0;
   }
   main.tabin > * {
+    animation: none;
+  }
+  .exc.pop::before,
+  .exc.pop::after,
+  .go.shine::after {
     animation: none;
   }
   .saved {
@@ -5925,7 +6158,13 @@ button.pw-n {
           : isOpt && picked === OPTIONAL[tDow]
             ? "Sábado, treino leve (opcional)"
             : "Treino extra";
-        html += `<div class="plan"><div class="k">${k}</div><div class="w">${esc(picked)}</div>${list ? `<div class="ex">${list.length ? `${list.length} ${sOf(list.length, "exercício", "exercícios")}` : "Nenhum exercício no plano ainda"}</div>` : ""}</div>`;
+        const okN = list ? list.filter(([n]) => exOk(todayKey)[n]).length : 0;
+        const count = !list
+          ? ""
+          : list.length
+            ? `<div class="ex${okN === list.length ? " all" : ""}" aria-live="polite">${doneTxt(list.length, okN)}</div><div class="exp" aria-hidden="true">${list.map((_, i) => `<i${i < okN ? ' class="on"' : ""}></i>`).join("")}</div>`
+            : `<div class="ex">Nenhum exercício no plano ainda</div>`;
+        html += `<div class="plan"><div class="k">${k}</div><div class="w">${esc(picked)}</div>${count}</div>`;
       } else {
         html += `<div class="plan"><div class="k">Fim de semana</div><div class="w wlock">${LOCK}Descanso</div><div class="ex">${esc(cap(nx.lbl))}: ${esc(nx.w)}.</div></div>`;
       }
@@ -6031,6 +6270,61 @@ button.pw-n {
     const o = state.ex[d];
     return o && typeof o === "object" ? o : {};
   };
+  // exercícios marcados como feitos no dia: nome -> 1 (o certinho de cada exercício no Hoje)
+  const exOk = (d) => {
+    const o = exDay(d)._ok;
+    return o && typeof o === "object" ? o : {};
+  };
+  const ICON_OK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+  // contagem do treino de hoje: "7 exercícios", "2 de 7 feitos", "Todos os 7 feitos"
+  function doneTxt(total, n) {
+    if (!n) return `${total} ${total === 1 ? "exercício" : "exercícios"}`;
+    if (n < total) return `${n} de ${total} feitos`;
+    return total === 1 ? "Exercício feito" : `Todos os ${total} feitos`;
+  }
+  // Marca (ou desmarca) um exercício de hoje como feito. Muda só a linha, a contagem e o botão de terminar,
+  // sem redesenhar a tela: a animação aparece inteira e o peso que estava sendo digitado fica no campo.
+  function toggleDone(btn) {
+    const n = btn.dataset.exok,
+      o = Object.assign({}, exDay(todayKey)),
+      ok = Object.assign({}, exOk(todayKey)),
+      on = !ok[n];
+    if (on) ok[n] = 1;
+    else delete ok[n];
+    if (Object.keys(ok).length) o._ok = ok;
+    else delete o._ok;
+    if (on && !o._w) o._w = picked;
+    if (Object.keys(o).length) state.ex[todayKey] = o;
+    else delete state.ex[todayKey];
+    commitKgDrafts();
+    localWrite();
+    queuePublish(30000);
+    btn.setAttribute("aria-pressed", String(on));
+    const li = btn.closest(".exi");
+    if (li) li.classList.toggle("ok", on);
+    btn.classList.remove("pop");
+    if (on) {
+      void btn.offsetWidth; // recomeça a animação se o mesmo exercício for marcado de novo
+      btn.classList.add("pop");
+    }
+    const sec = btn.closest(".check");
+    if (!sec) return;
+    const total = sec.querySelectorAll(".exc").length,
+      done = sec.querySelectorAll('.exc[aria-pressed="true"]').length,
+      ex = sec.querySelector(".plan .ex");
+    if (ex) {
+      ex.textContent = doneTxt(total, done);
+      ex.classList.toggle("all", done === total);
+    }
+    sec.querySelectorAll(".exp i").forEach((s, i) => s.classList.toggle("on", i < done));
+    // o último exercício do treino: um brilho passa pelo botão de terminar
+    const go = sec.querySelector('.go[data-act="mark"]');
+    if (go && on && done === total) {
+      go.classList.remove("shine");
+      void go.offsetWidth;
+      go.classList.add("shine");
+    }
+  }
   function loadHist(n) {
     const h = state.loads[n];
     if (!h || typeof h !== "object") return [];
@@ -6085,7 +6379,8 @@ button.pw-n {
   function sessionHTML(name) {
     const list = planOf(name);
     if (!list) return "";
-    const light = name === LIGHT;
+    const light = name === LIGHT,
+      done = exOk(todayKey);
     let h = `<ol class="exl" aria-label="Exercícios de ${esc(name)}">`;
     list.forEach(([n, sp, g]) => {
       const unit = isBody(n) ? null : unitOf(n);
@@ -6125,7 +6420,9 @@ button.pw-n {
       const grips = GRIP[n]
         ? `<div class="grips" role="group" aria-label="Pegada da ${esc(n.toLowerCase())}">${GRIP[n].map((x) => `<button class="grip" data-grip="${esc(n)}" data-g="${esc(x)}" aria-pressed="${x === grip}">${esc(x)}</button>`).join("")}</div>`
         : "";
-      h += `<li class="exi"><div class="exh"><div class="exn"><b>${esc(n)}</b><span>${esc(sp)}${n.toLowerCase().includes(mg) ? "" : `, ${esc(mg)}`}</span></div>${kgIn}</div>${grips}${meta ? `<div class="exs">${meta}</div>` : ""}</li>`;
+      const ok = !!done[n];
+      const check = `<button class="exc" data-exok="${esc(n)}" aria-pressed="${ok}" aria-label="${esc(n)} feito">${ICON_OK}</button>`;
+      h += `<li class="exi${ok ? " ok" : ""}"><div class="exh">${check}<div class="exn"><b>${esc(n)}</b><span>${esc(sp)}${n.toLowerCase().includes(mg) ? "" : `, ${esc(mg)}`}</span></div>${kgIn}</div>${grips}${meta ? `<div class="exs">${meta}</div>` : ""}</li>`;
     });
     return h + `</ol>`;
   }
@@ -9928,6 +10225,11 @@ button.pw-n {
     }
     if (saving) return;
     const act = t.dataset.act;
+    // ---- Hoje: exercício feito ----
+    if (t.dataset.exok !== undefined) {
+      toggleDone(t);
+      return;
+    }
     // ---- montar o treino: novo exercício, séries, ordem e excluir ----
     if (exSheet && t.closest(".sheet.xs")) {
       if (t.dataset.xsday) {
