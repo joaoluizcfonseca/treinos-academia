@@ -148,13 +148,13 @@ def test_past_workouts_keep_the_plan_they_had(app_url, open_app):
     assert errors == []
 
 
-def test_saturday_light_workout_can_get_bodyweight_exercises(app_url, open_app):
+def test_saturday_workout_can_get_bodyweight_exercises(app_url, open_app):
     page, errors = open_pesos(open_app, app_url)
-    assert page.locator('[data-pw="Peito e costas leve"]').inner_text().endswith("Sábado (opcional), 0 de 3 com peso")
+    assert page.locator('[data-pw="Ombro e peito"]').inner_text().endswith("Sábado, 0 de 5 com peso")
     page.click(".pe-new")
     page.fill("#xs-name", "Abdominal infra")
     page.click('[data-xsday="Ombro e abdômen"]')  # tira o de hoje
-    page.click('[data-xsday="Peito e costas leve"]')
+    page.click('[data-xsday="Ombro e peito"]')
     page.click('[data-xskind="corpo"]')
     page.click('[data-xsg="Abdômen"]')
     page.click('[data-xsunit="s"]')

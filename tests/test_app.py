@@ -9,7 +9,7 @@ from conftest import SAMPLE, STATE_RE, season_state
 TABS = ["hoje", "pesos", "prog", "quadro"]
 BROKEN_TEXT = ("undefined", "NaN", "[object Object]")
 
-# Dias que exercitam caminhos diferentes: semana fechada, sábado leve, domingo, feriado.
+# Dias que exercitam caminhos diferentes: semana fechada, sábado, domingo, feriado.
 DAYS = {
     "sexta à noite": "2026-10-02T21:00:00-03:00",
     "sábado": "2026-10-03T10:00:00-03:00",
@@ -72,11 +72,26 @@ def test_every_button_can_be_pressed(app_url, open_app):
 def test_workout_has_no_set_buttons_and_finishes_with_one_tap(app_url, open_app):
     page, errors = open_app(app_url(SAMPLE), DAYS["sábado"])
     go(page, "hoje")
-    assert "Peito e costas leve" in page.inner_text(".check .plan")
+    assert "Ombro e peito" in page.inner_text(".check .plan")
     assert page.locator(".set").count() == 0, "não existe mais marcação de série"
     assert page.locator(".restbar").count() == 0, "não existe mais descanso automático"
     assert "série" not in page.inner_text(".check").lower()
 
+    box = page.locator('.exi input[data-kg="Elevação lateral"]')
+    box.fill("7.5")
+    box.press("Enter")
+    page.click('button[data-act="mark"]')
+    page.wait_for_timeout(300)
+    assert "Feito: Ombro e peito" in page.inner_text(".done-msg")
+    assert errors == []
+
+
+def test_the_light_workout_is_still_there_to_pick(app_url, open_app):
+    page, errors = open_app(app_url(SAMPLE), DAYS["sábado"])
+    go(page, "hoje")
+    page.click('[data-act="swap"]')
+    page.click('.chip[data-type="Peito e costas leve"]')
+    assert "Carga leve" in page.inner_text(".lightnote")
     box = page.locator('.exi input[data-kg="Supino sentado (leve)"]')
     box.fill("22.5")
     box.press("Enter")
@@ -84,6 +99,52 @@ def test_workout_has_no_set_buttons_and_finishes_with_one_tap(app_url, open_app)
     page.wait_for_timeout(300)
     assert "Feito: Peito e costas leve" in page.inner_text(".done-msg")
     assert errors == []
+
+
+WEEK = {  # segunda a sexta da semana de 19/10, sem feriado
+    "2026-10-19": "Peito e tríceps",
+    "2026-10-20": "Costas e bíceps",
+    "2026-10-21": "Ombro e abdômen",
+    "2026-10-22": "Peito e costas",
+    "2026-10-23": "Tríceps e braço",
+}
+
+
+def test_saturday_has_its_own_workout(app_url, open_app):
+    state = {"logs": dict(WEEK), "loads": {"Elevação lateral": {"2026-10-21": 7}}}
+    page, errors = open_app(app_url(state), "2026-10-23T21:00:00-03:00")  # sexta, depois do treino
+    go(page, "hoje")
+    assert page.inner_text(".nxt") == "Próximo treino, amanhã: Ombro e peito"
+    page.clock.set_system_time("2026-10-24T10:00:00-03:00")  # sábado
+    page.reload()
+    page.wait_for_timeout(300)
+    go(page, "hoje")
+    assert page.inner_text(".check .plan .k") == "Treino de hoje"
+    assert page.inner_text(".check .plan .w") == "Ombro e peito"
+    names = [x.split("\n")[0] for x in page.locator(".check .exn").all_inner_texts()]
+    assert names == ["Ombro na máquina", "Elevação lateral", "Supino inclinado máquina",
+                     "Voador invertido (costas)", "Abdômen na máquina", "Pendurar na barra"]
+    assert page.input_value('.exi input[data-kg="Elevação lateral"]') == "7", "o peso da quarta já vem preenchido"
+    assert page.inner_text(".w7-m").startswith("Semana fechada: 5 de 5.")
+    page.click('button[data-act="mark"]')
+    page.wait_for_timeout(300)
+    assert page.inner_text(".w7-m").startswith("Semana fechada com 6 treinos.")
+    go(page, "pesos")
+    assert page.locator('[data-pw="Ombro e peito"]').inner_text().endswith("Sábado, 1 de 5 com peso")
+    assert errors == []
+
+
+def test_skipping_saturday_costs_nothing(app_url, open_app):
+    page, errors = open_app(app_url({"logs": dict(WEEK)}), "2026-10-26T09:00:00-03:00")  # segunda depois
+    go(page, "hoje")
+    assert page.locator(".miss").count() == 0, "sábado sem treino não é dia esquecido"
+    assert page.inner_text(".w7-a b") == "5", "e a sequência continua"
+    # com 4 treinos na semana, o sábado ainda fecha a semana
+    four = {k: v for k, v in WEEK.items() if k != "2026-10-22"}
+    page2, errors2 = open_app(app_url({"logs": four}), "2026-10-24T10:00:00-03:00")
+    go(page2, "hoje")
+    assert "Falta 1 treino pra fechar a semana." in page2.inner_text(".w7-m")
+    assert errors == [] and errors2 == []
 
 
 def test_weight_from_pesos_tab_fills_next_workout(app_url, open_app):
@@ -167,7 +228,7 @@ def test_progress_counts_planned_sets_of_marked_workouts(app_url, open_app):
     page, errors = open_app(app_url(SAMPLE), DAYS["sexta à noite"])
     go(page, "prog")
     row = page.locator(".vo-r", has_text="Peito").inner_text()
-    assert re.search(r"12\s*de\s*12", row), row
+    assert re.search(r"12\s*de\s*15", row), row  # segunda e quinta feitas; o sábado também prevê peito
     assert errors == []
 
 
