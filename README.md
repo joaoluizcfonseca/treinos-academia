@@ -44,9 +44,9 @@
 - **Treinos esquecidos:** dias da semana sem registro aparecem no topo, com o treino mais provável, para marcar com um toque.
 - **Primeira barra fixa:** o tempo pendurado na barra entra em todos os treinos da semana, com meta e evolução até tentar a primeira barra.
 
-| Montar o treino | Novo exercício |
-|:---:|:---:|
-| <img src="docs/tela-montar.png" width="200" alt="Treino aberto para editar: subir, descer, mudar séries e excluir cada exercício"> | <img src="docs/tela-novo-exercicio.png" width="200" alt="Folha de novo exercício com nome, dias, séries, repetições, tipo e músculo"> |
+| Montar o treino | Novo exercício | Mudar séries | Excluir e desfazer |
+|:---:|:---:|:---:|:---:|
+| <img src="docs/tela-montar.png" width="200" alt="Treino aberto para editar: subir, descer, mudar séries e excluir cada exercício"> | <img src="docs/tela-novo-exercicio.png" width="200" alt="Folha de novo exercício com nome, dias, séries, repetições, tipo e músculo"> | <img src="docs/tela-mudar-series.png" width="200" alt="Séries e repetições de um exercício, com a opção de excluir do treino"> | <img src="docs/tela-desfazer.png" width="200" alt="Aviso de exercício excluído, com o botão Desfazer"> |
 
 ### Progresso
 
